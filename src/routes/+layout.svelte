@@ -1,5 +1,24 @@
-<script>
+<script lang="ts">
 	import '../app.postcss';
+	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
 </script>
 
-<slot />
+<!-- App Shell -->
+<AppShell>
+	<!-- Header -->
+	<svelte:fragment slot="header">
+		<AppBar>
+			<svelte:fragment slot="lead">
+				<strong class="uppercase">Escola Divertida</strong>
+			</svelte:fragment>
+		</AppBar>
+	</svelte:fragment>
+	<!-- Page Content -->
+	<slot />
+	<!-- Footer -->
+	<svelte:fragment slot="footer">
+		<div class="p-4 text-center">
+			© {new Date().getFullYear()} Escola Divertida
+		</div>
+	</svelte:fragment>
+</AppShell>
