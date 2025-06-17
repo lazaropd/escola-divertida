@@ -24,7 +24,7 @@
     <div class="grid grid-cols-2 gap-8">
         <div class="flex flex-col justify-center items-center">
             <h2 class="text-2xl mb-2">Entrar</h2>
-            <p class="text-xs text-center mb-4">Para acessar a plataforma, você precisa de uma conta.<br/>Para criar uma conta, envie um email para lazaro.domiciano@gmail.com</p>
+            <p class="text-xs text-left mb-4">Para acessar a plataforma, você precisa de uma conta.<br/>Para criar uma conta, envie um email para lazaro.domiciano@gmail.com</p>
         </div>
         <div class="border-l-2 border-surface-500">
             <div class="space-y-4 pl-8">
