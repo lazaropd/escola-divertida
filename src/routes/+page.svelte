@@ -33,10 +33,19 @@
         </section>
 
         <section class="p-8 card">
-            <h2 class="h2 text-tertiary-500">Disclaimer</h2>
+            <h2 class="h2 text-tertiary-500">Destaques Importantes e Uso Responsável</h2>
             <img src="https://source.unsplash.com/800x400/?disclaimer,warning" alt="Aviso" class="rounded-lg mb-4" />
             <p class="text-lg">
-                Este projeto é um protótipo em desenvolvimento e pode conter erros ou informações imprecisas. Não nos responsabilizamos pelo uso indevido das informações aqui apresentadas.
+                Este é um projeto de desenvolvimento pessoal, sem fins lucrativos e sem qualquer vínculo com entidades governamentais, educacionais ou privadas.
+            </p>
+            <p class="text-lg">
+                O objetivo principal é a exploração e o aprendizado através da aplicação prática de Inteligências Artificiais.
+            </p>
+            <p class="text-lg">
+                O acompanhamento de um profissional capacitado da área da educação é indispensável para a formação de crianças. Este trabalho não substitui o papel da família, da sociedade e do Estado na educação.
+            </p>
+            <p class="text-lg">
+                Todo o trabalho, ideias e insights gerados podem ser livremente compartilhados, desde que os créditos sejam mantidos ao criador original: Lazaro Pinheiro Domiciano.
             </p>
         </section>
     </div>
