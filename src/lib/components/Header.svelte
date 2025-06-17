@@ -2,6 +2,7 @@
     import { supabase } from '$lib/supabaseClient';
     import { goto } from '$app/navigation';
     import { onMount } from 'svelte';
+    import { AppBar } from '@skeletonlabs/skeleton';
 
     let session;
 
