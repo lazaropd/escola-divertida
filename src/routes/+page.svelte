@@ -15,16 +15,45 @@
             {/if}
         </div>
         <h1>Home</h1>
+        {#if session}
+            <div class="card p-4">
+                <h2 class="h2">Bem-vindo à Home!</h2>
+                <p>Aqui estão algumas atividades para você:</p>
+                <ul>
+                    <li>Matemática: Resolva os problemas de adição</li>
+                    <li>Português: Leia o conto e responda as perguntas</li>
+                    <li>Ciências: Descubra os planetas do sistema solar</li>
+                </ul>
+            </div>
+        {:else}
+            <div class="card p-4">
+                <h2 class="h2">Bem-vindo à Escola Divertida!</h2>
+                <p>Para acessar as atividades, por favor, faça login.</p>
+                <input class="input" type="email" placeholder="Email" bind:value={email} />
+                <input class="input" type="password" placeholder="Senha" bind:value={password} />
+                <button class="btn variant-filled-primary" on:click={signIn}>Entrar</button>
+                {#if error}
+                    <div class="alert variant-filled-error">{error}</div>
+                {/if}
+            </div>
+        {/if}
 	</div>
 </div>
 
 <script lang="ts">
     import { supabase } from '$lib/supabaseClient';
     import { goto } from '$app/navigation';
+    import { onMount } from 'svelte';
 
     let email = '';
     let password = '';
     let error = '';
+    let session;
+
+    onMount(async () => {
+        const { data: { session: currentSession } } = await supabase.auth.getSession();
+        session = currentSession;
+    });
 
     async function signIn() {
         const { data, error: err } = await supabase.auth.signInWithPassword({
