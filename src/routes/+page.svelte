@@ -42,10 +42,11 @@
             </div>
         {:else}
             <div class="card p-8 flex flex-col justify-center items-center">
-                <h2 class="h2 mb-4">Login</h2>
+                <h2 class="text-2xl mb-2">Entrar</h2>
+                <p class="text-sm text-center mb-4">Para acessar a plataforma, você precisa de uma conta.<br/>Para criar uma conta, envie um email para lazaro.domiciano@gmail.com</p>
                 <div class="space-y-4">
-                    <input class="input" type="email" placeholder="Email" bind:value={email} />
-                    <input class="input" type="password" placeholder="Senha" bind:value={password} />
+                    <input class="input p-2" type="email" placeholder="Email" bind:value={email} />
+                    <input class="input p-2" type="password" placeholder="Senha" bind:value={password} />
                     <button class="btn variant-filled-primary" on:click={signIn}>Entrar</button>
                     {#if error}
                         <div class="alert variant-filled-error">{error}</div>
