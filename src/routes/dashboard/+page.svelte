@@ -7,13 +7,17 @@
 
     let session;
     let user;
+    let redirecting = false;
 
     onMount(async () => {
         const { data: { session: currentSession } } = await supabase.auth.getSession();
         session = currentSession;
 
         if (!session) {
-            goto('/');
+            redirecting = true;
+            setTimeout(() => {
+                goto('/');
+            }, 2000); // Redireciona após 2 segundos
         } else {
             user = session.user;
         }
@@ -28,7 +32,11 @@
             <div>Atividade 3</div>
         </div>
 {:else}
-    <p>Redirecionando...</p>
+    {#if redirecting}
+        <p>Redirecionando para a página inicial porque você não está logado...</p>
+    {:else}
+        <p>Redirecionando...</p>
+    {/if}
 {/if}
 <h1>Dashboard</h1>
 </div>
