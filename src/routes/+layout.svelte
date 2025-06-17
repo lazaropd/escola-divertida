@@ -12,11 +12,9 @@
         <Header />
 	</svelte:fragment>
 	<!-- Page Content -->
-	<svelte:fragment slot="page">
-		<div class="flex-grow">
-			<slot />
-		</div>
-	</svelte:fragment>
+	<div class="flex-grow">
+		<slot />
+	</div>
 	<!-- Footer -->
 	<svelte:fragment slot="footer">
         <Footer />
