@@ -12,7 +12,7 @@
         <Header />
 	</svelte:fragment>
 	<!-- Page Content -->
-	<div class="flex-grow">
+	<div class="flex-grow flex flex-col">
 		<slot />
 	</div>
 	<!-- Footer -->
