@@ -26,9 +26,9 @@
         <strong class="uppercase">Escola Divertida</strong>
     </svelte:fragment>
     <svelte:fragment slot="trail">
-        <NavLink href="/" class="mr-4">Home</NavLink>
-        <NavLink href="/dashboard" class="mr-4">Dashboard</NavLink>
-        <NavLink href="/api/generate-content" class="mr-4">Gerar Conteúdo</NavLink>
+        <a href="/" class="mr-4">Home</a>
+        <a href="/dashboard" class="mr-4">Dashboard</a>
+        <a href="/api/generate-content" class="mr-4">Gerar Conteúdo</a>
         {#if session}
             <button class="btn variant-filled-secondary" on:click={signOut}>
                 Sair
