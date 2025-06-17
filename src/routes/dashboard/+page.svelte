@@ -28,3 +28,4 @@
 {:else}
     <p>Redirecionando...</p>
 {/if}
+</div>
