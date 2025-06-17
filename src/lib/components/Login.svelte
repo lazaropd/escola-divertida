@@ -28,8 +28,8 @@
         </div>
         <div class="border-l-2 border-surface-500 w-3/4">
             <div class="space-y-2 pl-8">
-                <input class="input p-4 w-full" style="width: 200%;" type="email" placeholder="Email" bind:value={email} />
-                <input class="input p-4 w-full" style="width: 200%;" type="password" placeholder="Senha" bind:value={password} />
+                <input class="input p-4 w-full" type="email" placeholder="Email" bind:value={email} />
+                <input class="input p-4 w-full" type="password" placeholder="Senha" bind:value={password} />
                 <button class="btn variant-filled-primary w-full" on:click={signIn}>Entrar</button>
                 {#if error}
                     <div class="alert variant-filled-error">{error}</div>
