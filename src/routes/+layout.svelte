@@ -6,13 +6,17 @@
 </script>
 
 <!-- App Shell -->
-<AppShell>
+<AppShell class="h-screen flex flex-col">
 	<!-- Header -->
 	<svelte:fragment slot="header">
         <Header />
 	</svelte:fragment>
 	<!-- Page Content -->
-	<slot />
+	<svelte:fragment slot="page">
+		<div class="flex-grow">
+			<slot />
+		</div>
+	</svelte:fragment>
 	<!-- Footer -->
 	<svelte:fragment slot="footer">
         <Footer />
