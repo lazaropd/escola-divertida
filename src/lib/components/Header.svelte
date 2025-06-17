@@ -2,7 +2,7 @@
     import { supabase } from '$lib/supabaseClient';
     import { goto } from '$app/navigation';
     import { onMount } from 'svelte';
-    import { AppBar } from '@skeletonlabs/skeleton';
+    import { AppBar, NavLink } from '@skeletonlabs/skeleton';
 
     let session;
 
@@ -25,9 +25,14 @@
     <svelte:fragment slot="lead">
         <strong class="uppercase">Escola Divertida</strong>
     </svelte:fragment>
-    {#if session}
-        <button class="btn variant-filled-secondary" on:click={signOut}>
-            Sair
-        </button>
-    {/if}
+    <svelte:fragment slot="trail">
+        <NavLink href="/" class="mr-4">Home</NavLink>
+        <NavLink href="/dashboard" class="mr-4">Dashboard</NavLink>
+        <NavLink href="/api/generate-content" class="mr-4">Gerar Conteúdo</NavLink>
+        {#if session}
+            <button class="btn variant-filled-secondary" on:click={signOut}>
+                Sair
+            </button>
+        {/if}
+    </svelte:fragment>
 </AppBar>
