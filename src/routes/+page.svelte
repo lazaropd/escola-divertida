@@ -15,17 +15,20 @@
 
 <div class="container h-full mx-auto flex justify-center items-center h-full">
     {#if session}
-        <h1 class="h1 text-primary-500 text-center">Bem-vindo à Escola Divertida!</h1>
-        <div class="card p-4">
-            <h2 class="h2">Bem-vindo à Home!</h2>
+    <div class="p-24">
+        <div class="card p-14">
+            <h1 class="h2 text-primary-500 text-center">Você está na escola divertida</h1>
             <p>Aqui estão algumas atividades para você:</p>
             <ul>
                 <li>Matemática: Resolva os problemas de adição</li>
                 <li>Português: Leia o conto e responda as perguntas</li>
                 <li>Ciências: Descubra os planetas do sistema solar</li>
             </ul>
-        </div>
+        </div></div>
     {:else}
-        <Login />
+        <div class="p-24">
+            <Login />
+        </div>
+
     {/if}
 </div>
