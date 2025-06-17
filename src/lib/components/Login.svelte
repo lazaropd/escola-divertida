@@ -23,7 +23,7 @@
 <div class="card p-8 w-full max-w-md flex flex-col items-center">
     <h2 class="text-2xl mb-2">Entrar</h2>
     <p class="text-xs text-center mb-4">Para acessar a plataforma, você precisa de uma conta.<br />Para criar uma conta, envie um email para lazaro.domiciano@gmail.com</p>
-    <div class="space-y-2 w-full">
+    <div class="space-y-4 w-full">
         <input class="input p-4 w-full" type="email" placeholder="Email" bind:value={email} />
         <input class="input p-4 w-full" type="password" placeholder="Senha" bind:value={password} />
         <button class="btn variant-filled-primary w-full" on:click={signIn}>Entrar</button>
