@@ -70,3 +70,4 @@
 {:else}
     <p>Redirecionando...</p>
 {/if}
+<h1>Gerar Conteúdo</h1>

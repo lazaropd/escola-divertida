@@ -30,4 +30,5 @@
 {:else}
     <p>Redirecionando...</p>
 {/if}
+<h1>Dashboard</h1>
 </div>

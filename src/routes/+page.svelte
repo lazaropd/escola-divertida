@@ -23,5 +23,6 @@
 		<button class="btn variant-filled-primary" on:click={signInWithGoogle}>
 			Entrar com Google
 		</button>
+        <h1>Home</h1>
 	</div>
 </div>
