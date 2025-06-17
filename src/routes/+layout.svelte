@@ -1,17 +1,14 @@
 <script lang="ts">
 	import '../app.css';
-	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
+	import { AppShell } from '@skeletonlabs/skeleton';
+    import Header from '$lib/components/Header.svelte';
 </script>
 
 <!-- App Shell -->
 <AppShell>
 	<!-- Header -->
 	<svelte:fragment slot="header">
-		<AppBar>
-			<svelte:fragment slot="lead">
-				<strong class="uppercase">Escola Divertida</strong>
-			</svelte:fragment>
-		</AppBar>
+        <Header />
 	</svelte:fragment>
 	<!-- Page Content -->
 	<slot />
