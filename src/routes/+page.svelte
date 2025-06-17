@@ -41,14 +41,16 @@
                 </ul>
             </div>
         {:else}
-            <div class="card p-4">
-                <h2 class="h2">Login</h2>
-                <input class="input" type="email" placeholder="Email" bind:value={email} />
-                <input class="input" type="password" placeholder="Senha" bind:value={password} />
-                <button class="btn variant-filled-primary" on:click={signIn}>Entrar</button>
-                {#if error}
-                    <div class="alert variant-filled-error">{error}</div>
-                {/if}
+            <div class="card p-8 flex flex-col justify-center items-center">
+                <h2 class="h2 mb-4">Login</h2>
+                <div class="space-y-4">
+                    <input class="input" type="email" placeholder="Email" bind:value={email} />
+                    <input class="input" type="password" placeholder="Senha" bind:value={password} />
+                    <button class="btn variant-filled-primary" on:click={signIn}>Entrar</button>
+                    {#if error}
+                        <div class="alert variant-filled-error">{error}</div>
+                    {/if}
+                </div>
             </div>
         {/if}
 	</div>
