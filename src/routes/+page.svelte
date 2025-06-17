@@ -14,32 +14,6 @@
                 <div class="alert variant-filled-error">{error}</div>
             {/if}
         </div>
-        <h1>Home</h1>
-        {#if session}
-            <div class="card p-4">
-                <h2 class="h2">Bem-vindo à Home!</h2>
-                <p>Aqui estão algumas atividades para você:</p>
-                <ul>
-                    <li>Matemática: Resolva os problemas de adição</li>
-                    <li>Português: Leia o conto e responda as perguntas</li>
-                    <li>Ciências: Descubra os planetas do sistema solar</li>
-                </ul>
-            </div>
-        {:else}
-            <div class="card p-4">
-                <h2 class="h2">Bem-vindo à Escola Divertida!</h2>
-                <p>Para acessar as atividades, por favor, faça login.</p>
-                <input class="input" type="email" placeholder="Email" bind:value={email} />
-                <input class="input" type="password" placeholder="Senha" bind:value={password} />
-                <button class="btn variant-filled-primary" on:click={signIn}>Entrar</button>
-                {#if error}
-                    <div class="alert variant-filled-error">{error}</div>
-                {/if}
-            </div>
-        {/if}
-	</div>
-</div>
-
 <script lang="ts">
     import { supabase } from '$lib/supabaseClient';
     import { goto } from '$app/navigation';
@@ -68,3 +42,30 @@
         }
     }
 </script>
+
+<div class="container h-full mx-auto flex justify-center items-center">
+	<div class="space-y-5">
+        <h1 class="h1 text-primary-500">Bem-vindo à Escola Divertida!</h1>
+        {#if session}
+            <div class="card p-4">
+                <h2 class="h2">Bem-vindo à Home!</h2>
+                <p>Aqui estão algumas atividades para você:</p>
+                <ul>
+                    <li>Matemática: Resolva os problemas de adição</li>
+                    <li>Português: Leia o conto e responda as perguntas</li>
+                    <li>Ciências: Descubra os planetas do sistema solar</li>
+                </ul>
+            </div>
+        {:else}
+            <div class="card p-4">
+                <h2 class="h2">Login</h2>
+                <input class="input" type="email" placeholder="Email" bind:value={email} />
+                <input class="input" type="password" placeholder="Senha" bind:value={password} />
+                <button class="btn variant-filled-primary" on:click={signIn}>Entrar</button>
+                {#if error}
+                    <div class="alert variant-filled-error">{error}</div>
+                {/if}
+            </div>
+        {/if}
+	</div>
+</div>

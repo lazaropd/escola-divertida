@@ -2,9 +2,10 @@
 
 /* Define as cores primárias vibrantes */
 :root {
-  --theme-primary: 50, 205, 50; /* LimeGreen */
-  --theme-secondary: 255, 215, 0; /* Gold */
-  --theme-tertiary: 30, 144, 255; /* RoyalBlue */
+  --theme-primary: 79, 225, 174; /* Verde água */
+  --theme-secondary: 255, 235, 59; /* Amarelo */
+  --theme-tertiary: 129, 236, 236; /* Azul claro */
+  --theme-quaternary: 250, 177, 160; /* Rosa */
 }
 
 /* Aplica as cores ao tema Skeleton */
@@ -45,4 +46,38 @@
   --color-tertiary-700: rgba(var(--theme-tertiary), 0.7);
   --color-tertiary-800: rgba(var(--theme-tertiary), 0.8);
   --color-tertiary-900: rgba(var(--theme-tertiary), 0.9);
+
+    --color-quaternary-50: rgba(var(--theme-quaternary), 0.05);
+  --color-quaternary-100: rgba(var(--theme-quaternary), 0.1);
+  --color-quaternary-200: rgba(var(--theme-quaternary), 0.2);
+  --color-quaternary-300: rgba(var(--theme-quaternary), 0.3);
+  --color-quaternary-400: rgba(var(--theme-quaternary), 0.4);
+  --color-quaternary-500: rgba(var(--theme-quaternary), 0.5);
+  --color-quaternary-600: rgba(var(--theme-quaternary), 0.6);
+  --color-quaternary-700: rgba(var(--theme-quaternary), 0.7);
+  --color-quaternary-800: rgba(var(--theme-quaternary), 0.8);
+  --color-quaternary-900: rgba(var(--theme-quaternary), 0.9);
+}
+
+/* Estilos adicionais para tornar o site mais amigável para crianças */
+body {
+  font-family: 'Nunito', sans-serif;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-weight: 700;
+}
+
+.btn {
+  border-radius: 2rem;
+  font-weight: 600;
+}
+
+.card {
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.input {
+    border-radius: 1rem;
 }
