@@ -20,14 +20,14 @@
     }
 </script>
 
-<div class="card p-8 w-full max-w-md">
+<div class="card p-8 w-full max-w-xl">
     <div class="grid grid-cols-2 gap-8">
         <div class="flex flex-col justify-center items-center">
             <h2 class="text-2xl mb-2">Entrar</h2>
-            <p class="text-sm text-center mb-4">Para acessar a plataforma, você precisa de uma conta.<br/>Para criar uma conta, envie um email para lazaro.domiciano@gmail.com</p>
+            <p class="text-xs text-center mb-4">Para acessar a plataforma, você precisa de uma conta.<br/>Para criar uma conta, envie um email para lazaro.domiciano@gmail.com</p>
         </div>
-        <div>
-            <div class="space-y-4">
+        <div class="border-l-2 border-surface-500">
+            <div class="space-y-4 pl-8">
                 <input class="input p-4 w-full" type="email" placeholder="Email" bind:value={email} />
                 <input class="input p-4 w-full" type="password" placeholder="Senha" bind:value={password} />
                 <button class="btn variant-filled-primary w-full" on:click={signIn}>Entrar</button>

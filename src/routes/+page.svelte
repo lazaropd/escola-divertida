@@ -26,6 +26,8 @@
             </ul>
         </div>
     {:else}
-        <Login />
+        <div class="flex justify-center items-center h-full">
+            <Login />
+        </div>
     {/if}
 </div>
