@@ -2,6 +2,8 @@
     import { supabase } from '$lib/supabaseClient';
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
+    import Exercise from '$lib/components/Exercise.svelte';
+    import RewardBadge from '$lib/components/RewardBadge.svelte';
 
     let session;
     let user;
@@ -28,4 +30,3 @@
 {:else}
     <p>Redirecionando...</p>
 {/if}
-</div>
