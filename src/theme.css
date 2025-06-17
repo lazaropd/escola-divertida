@@ -1,0 +1,48 @@
+/* src/theme.css */
+
+/* Define as cores primárias vibrantes */
+:root {
+  --theme-primary: 50, 205, 50; /* LimeGreen */
+  --theme-secondary: 255, 215, 0; /* Gold */
+  --theme-tertiary: 30, 144, 255; /* RoyalBlue */
+}
+
+/* Aplica as cores ao tema Skeleton */
+:root {
+  --color-surface-100: rgba(255, 255, 255, 0.87);
+  --color-surface-200: rgba(245, 245, 245, 0.87);
+  --color-surface-300: rgba(220, 220, 220, 0.87);
+  
+  --color-primary-50: rgba(var(--theme-primary), 0.05);
+  --color-primary-100: rgba(var(--theme-primary), 0.1);
+  --color-primary-200: rgba(var(--theme-primary), 0.2);
+  --color-primary-300: rgba(var(--theme-primary), 0.3);
+  --color-primary-400: rgba(var(--theme-primary), 0.4);
+  --color-primary-500: rgba(var(--theme-primary), 0.5);
+  --color-primary-600: rgba(var(--theme-primary), 0.6);
+  --color-primary-700: rgba(var(--theme-primary), 0.7);
+  --color-primary-800: rgba(var(--theme-primary), 0.8);
+  --color-primary-900: rgba(var(--theme-primary), 0.9);
+
+  --color-secondary-50: rgba(var(--theme-secondary), 0.05);
+  --color-secondary-100: rgba(var(--theme-secondary), 0.1);
+  --color-secondary-200: rgba(var(--theme-secondary), 0.2);
+  --color-secondary-300: rgba(var(--theme-secondary), 0.3);
+  --color-secondary-400: rgba(var(--theme-secondary), 0.4);
+  --color-secondary-500: rgba(var(--theme-secondary), 0.5);
+  --color-secondary-600: rgba(var(--theme-secondary), 0.6);
+  --color-secondary-700: rgba(var(--theme-secondary), 0.7);
+  --color-secondary-800: rgba(var(--theme-secondary), 0.8);
+  --color-secondary-900: rgba(var(--theme-secondary), 0.9);
+
+  --color-tertiary-50: rgba(var(--theme-tertiary), 0.05);
+  --color-tertiary-100: rgba(var(--theme-tertiary), 0.1);
+  --color-tertiary-200: rgba(var(--theme-tertiary), 0.2);
+  --color-tertiary-300: rgba(var(--theme-tertiary), 0.3);
+  --color-tertiary-400: rgba(var(--theme-tertiary), 0.4);
+  --color-tertiary-500: rgba(var(--theme-tertiary), 0.5);
+  --color-tertiary-600: rgba(var(--theme-tertiary), 0.6);
+  --color-tertiary-700: rgba(var(--theme-tertiary), 0.7);
+  --color-tertiary-800: rgba(var(--theme-tertiary), 0.8);
+  --color-tertiary-900: rgba(var(--theme-tertiary), 0.9);
+}
