@@ -20,13 +20,13 @@
     });
 </script>
 
+<div>
 {#if session}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
             <Exercise />
             <RewardBadge points={100} medal="ouro" />
             <div>Atividade 3</div>
         </div>
-    </div>
 {:else}
     <p>Redirecionando...</p>
 {/if}
