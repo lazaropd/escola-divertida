@@ -28,8 +28,8 @@
 </script>
 
 <div class="container h-full mx-auto flex justify-center items-center">
-	<div class="space-y-5">
-        <h1 class="h1 text-primary-500">Bem-vindo à Escola Divertida!</h1>
+	<div class="space-y-12">
+        <h1 class="h1 text-primary-500 text-center">Bem-vindo à Escola Divertida!</h1>
         {#if session}
             <div class="card p-4">
                 <h2 class="h2">Bem-vindo à Home!</h2>
@@ -41,17 +41,17 @@
                 </ul>
             </div>
         {:else}
-            <div class="card p-8">
-                <div class="grid grid-cols-2 gap-8">
+            <div class="card p-8 w-full max-w-md">
+                <div class="grid grid-cols-1 gap-8">
                     <div class="flex flex-col justify-center items-center">
                         <h2 class="text-2xl mb-2">Entrar</h2>
                         <p class="text-sm text-center mb-4">Para acessar a plataforma, você precisa de uma conta.<br/>Para criar uma conta, envie um email para lazaro.domiciano@gmail.com</p>
                     </div>
-                    <div class="border-l-2 border-surface-500">
-                        <div class="space-y-4 pl-8">
-                            <input class="input p-4" type="email" placeholder="Email" bind:value={email} />
-                            <input class="input p-4" type="password" placeholder="Senha" bind:value={password} />
-                            <button class="btn variant-filled-primary" on:click={signIn}>Entrar</button>
+                    <div>
+                        <div class="space-y-4">
+                            <input class="input p-4 w-full" type="email" placeholder="Email" bind:value={email} />
+                            <input class="input p-4 w-full" type="password" placeholder="Senha" bind:value={password} />
+                            <button class="btn variant-filled-primary w-full" on:click={signIn}>Entrar</button>
                             {#if error}
                                 <div class="alert variant-filled-error">{error}</div>
                             {/if}
