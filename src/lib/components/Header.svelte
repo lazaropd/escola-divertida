@@ -2,7 +2,7 @@
     import { supabase } from '$lib/supabaseClient';
     import { goto } from '$app/navigation';
     import { onMount } from 'svelte';
-    import { AppBar, NavLink } from '@skeletonlabs/skeleton';
+    import { AppBar } from '@skeletonlabs/skeleton';
 
     let session;
 
