@@ -17,6 +17,7 @@
             console.error('Erro ao fazer logout:', error);
         } else {
             goto('/');
+            window.location.reload()
         }
     }
 </script>
