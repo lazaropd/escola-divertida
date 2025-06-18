@@ -7,7 +7,7 @@
 </script>
 
 <div class="container mx-auto py-16">
-    {#if session}
+
     <div class="space-y-8">
         <section class="p-8 card flex">
             <img src="/images/home1.png" alt="Crianças aprendendo" class="rounded-lg w-1/4 mr-4 object-contain" />
@@ -45,9 +45,5 @@
             </div>
         </section>
     </div>
-    {:else}
-        <div class="flex justify-center items-center h-full">
-            <Login />
-        </div>
-    {/if}
+
 </div>

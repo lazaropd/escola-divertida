@@ -20,6 +20,7 @@
     }
 </script>
 
+<div class="p-24">
 <div class="card p-8 w-full max-w-md flex flex-col items-center">
     <h2 class="text-2xl mb-2">Entrar</h2>
     <p class="text-xs text-left mb-4">Para acessar a plataforma, você precisa de uma conta.<br />Para criar uma conta, envie um email para lazaro.domiciano@gmail.com</p><br />
@@ -31,4 +32,5 @@
             <div class="alert variant-filled-error">{error}</div>
         {/if}
     </div>
+</div>
 </div>

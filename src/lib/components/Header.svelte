@@ -36,7 +36,7 @@
                 Sair
             </button>
         {:else}
-            <a href="/login" class="mr-4 variant-filled-secondary">Entrar</a>
+            <a href="/login" class="btn variant-filled-secondary">Entrar</a>
         {/if}
     </svelte:fragment>
 </AppBar>
