@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { missionCount, missionComplete } from '$lib/stores';
+
     let question = "Qual é a capital do Brasil?";
     let answer = "";
     let result = "";
@@ -7,8 +9,15 @@
         // Aqui você pode adicionar a lógica para verificar a resposta
         if (answer.toLowerCase() === "brasília") {
             result = "Resposta correta!";
+			advanceMission();
         } else {  
             result = "Resposta incorreta. Tente novamente.";
+        }
+    }
+
+	function advanceMission() {
+        if ($missionCount < 11) {
+            $missionCount++;
         }
     }
 </script>
