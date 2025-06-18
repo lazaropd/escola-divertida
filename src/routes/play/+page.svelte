@@ -3,6 +3,8 @@
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
 	import Exercise from '$lib/components/Exercise.svelte';
+    import Mission from '$lib/components/Mission.svelte';
+
 
     let session;
     let user;
@@ -24,7 +26,8 @@
 
     {#if session}
 
-		<Exercise/>
+		<Mission />
+        <Exercise/>
 
     {:else}
         <p>Redirecionando...</p>

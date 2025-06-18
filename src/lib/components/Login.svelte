@@ -6,6 +6,8 @@
     let password = '';
     let error = '';
 
+    let session;    
+
     async function signIn() {
         const { data, error: err } = await supabase.auth.signInWithPassword({
             email: email,
@@ -15,8 +17,8 @@
         if (err) {
             error = err.message;
         } else {
-            $session = data.session;
-            await goto('/pontos');
+            session = data.session;
+            await goto('/dashboard');
             await invalidateAll();
         }
     }

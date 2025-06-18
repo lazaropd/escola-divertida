@@ -24,7 +24,8 @@
             .from('players')
             .select('*')
             .eq('user_id', user.id)
-            .order('created_at', { ascending: false });
+            .eq('status', 'active')
+            .order('ano_escolar', { ascending: true });
 
         if (error) {
             console.error('Erro ao buscar jogadores:', error);

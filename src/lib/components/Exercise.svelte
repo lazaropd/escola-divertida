@@ -19,6 +19,9 @@
         if ($missionCount < 11) {
             $missionCount++;
         }
+        if ($missionCount === 11) {
+            $missionComplete = true;
+        }
     }
 </script>
 

@@ -1,21 +1,21 @@
+
+
 <script lang="ts">
     import { onMount } from 'svelte';
-
-    let count = 1;
-    let missionComplete = false;
+    import { missionCount, missionComplete } from '$lib/stores';
 
     function advanceMission() {
-        if (count < 11) {
-            count++;
+        if ($missionCount < 11) {
+            $missionCount++;
         }
-        if (count === 11) {
-            missionComplete = true;
+        if ($missionCount === 11) {
+            $missionComplete = true;
         }
     }
 
     function resetMission() {
-        count = 1;
-        missionComplete = false;
+        $missionCount = 1;
+        $missionComplete = false;
     }
 </script>
 
@@ -27,7 +27,7 @@
             src="/images/rocket.png"
             alt="Foguete"
             class="absolute rounded-full w-12 h-12 transition-transform duration-500"
-            style="transform: translateX({count * 9}%) rotate(90deg); top: 50%; left:0%;"
+            style="transform: translateX({$missionCount * 9}%) rotate(90deg); top: 50%; left:0%;"
             />
 		
         <img src="/images/alien.png" alt="Planeta Alienígena" class="rounded-full w-12 h-12" style="right:0px"/>
@@ -35,8 +35,7 @@
         <button class="btn variant-filled-primary" on:click={advanceMission}>Avançar</button>
 		</div>
     </div>
-    {#if missionComplete}
-        
+    {#if $missionComplete}
         <button class="btn variant-filled-success" on:click={resetMission}>Nova Aventura</button>
     {/if}
 </div>
