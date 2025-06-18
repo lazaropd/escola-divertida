@@ -19,14 +19,13 @@
     });
 </script>
 
-<div class="container mx-auto p-4">
-    <h1 class="h1 text-primary-500">Jogar</h1>
+<div class="container mx-auto py-16">
+    <h1 class="h3 text-primary-500">Jogar</h1>
 
     {#if session}
-        <div>
-            <h2 class="h2">Exercício</h2>
-			<Exercise/>
-        </div>
+
+		<Exercise/>
+
     {:else}
         <p>Redirecionando...</p>
     {/if}
