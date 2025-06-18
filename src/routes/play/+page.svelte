@@ -11,12 +11,15 @@
     let user;
     let players = [];
     let localSelected = null;
-    let exercise = null;
+    let exercise = null; // O exercício atual a ser exibido no componente Exercise
+    let exercises: any[] = []; // Array para armazenar os 10 exercícios do Gemini
+    let currentExerciseIndex: number = -1; // Índice do exercício atual no array 'exercises'
+
     let isLoadingExercise = false;
     let exerciseError: string | null = null;
 
-    // Função para sortear um novo exercício (agora busca da API)
-    async function getNewExercise() {
+    // Função para buscar um novo lote de 10 exercícios da API do Gemini
+    async function loadNewQuizBatch() {
         if (!localSelected || !localSelected.disciplina) {
             console.warn('Jogador ou disciplina não selecionados para gerar exercício.');
             return;
@@ -24,7 +27,7 @@
 
         isLoadingExercise = true;
         exerciseError = null;
-        exercise = null; // Limpa o exercício anterior
+        exercise = null; // Limpa o exercício atual enquanto carrega
 
         try {
             const response = await fetch('/api/generate-quiz', {
@@ -49,19 +52,36 @@
 
             const data = await response.json();
             if (data.exercises && data.exercises.length > 0) {
-                // Seleciona um exercício aleatoriamente da lista retornada pela API
-                exercise = data.exercises[Math.floor(Math.random() * data.exercises.length)];
+                exercises = data.exercises; // Armazena todos os 10 exercícios
+                currentExerciseIndex = 0; // Começa com o primeiro
+                exercise = exercises[currentExerciseIndex]; // Define o primeiro exercício para exibição
             } else {
                 exerciseError = 'Nenhum exercício foi gerado pela API.';
             }
         } catch (error) {
-            console.error('Erro ao buscar novo exercício:', error);
-            exerciseError = (error as Error).message || 'Erro desconhecido ao carregar exercício.';
+            console.error('Erro ao buscar novo lote de exercícios:', error);
+            exerciseError = (error as Error).message || 'Erro desconhecido ao carregar exercícios.';
         } finally {
             isLoadingExercise = false;
         }
     }
 
+    // Função para exibir o próximo exercício do lote pré-carregado
+    function showNextExercise() {
+        currentExerciseIndex++;
+        if (currentExerciseIndex < exercises.length) {
+            exercise = exercises[currentExerciseIndex]; // Exibe o próximo exercício do lote
+        } else {
+            // Todos os 10 exercícios do lote atual foram utilizados.
+            // Verifica se ainda há missões a serem completadas para buscar um novo lote.
+            if ($missionCount < 10) { // Assumindo 10 é o número máximo de missões
+                loadNewQuizBatch(); // Busca um novo lote de exercícios
+            } else {
+                // Todas as missões foram completadas, não há mais exercícios para carregar.
+                exercise = null; // Limpa o exercício para exibir a mensagem de conclusão
+            }
+        }
+    }
 
     onMount(async () => {
         const { data: { session: currentSession } } = await supabase.auth.getSession();
@@ -93,13 +113,12 @@
 
     function handlePlayerChange() {
 		if (localSelected) {
+            // Atualiza localSelected com a disciplina selecionada
             localSelected = getSubject(localSelected);
 			selectedPlayer.set(localSelected);
-            getNewExercise(); // Sorteia o primeiro exercício ao selecionar o jogador
+            loadNewQuizBatch(); // Inicia o carregamento do primeiro lote de exercícios
 		}
 	}
-
-
 </script>
 
 <div class="container mx-auto py-16">
@@ -123,13 +142,12 @@
                     <p>Adicionando combustível no foguete...</p>
                 {:else if exerciseError}
                     <p class="text-red-500">Erro: {exerciseError}</p>
-                    <button class="btn variant-filled-primary mt-4" on:click={getNewExercise}>Tentar Novamente</button>
+                    <button class="btn variant-filled-primary mt-4" on:click={loadNewQuizBatch}>Tentar Novamente</button>
                 {:else if exercise}
                     <!-- Ouve o evento 'nextExercise' do componente Exercise -->
-                    <Exercise {exercise} on:nextExercise={getNewExercise} />
+                    <Exercise {exercise} on:nextExercise={showNextExercise} />
                 {:else}
-                {$selectedPlayer.disciplina} {localSelected.disciplina}
-                {exercise} {localSelected.apelido} {$selectedPlayer.disciplina} {getNewExercise()}
+                    <!-- Estado inicial ou após todas as missões completadas -->
                     <p>Selecione um astronauta para iniciar a missão.</p>
                 {/if}
             {:else}
