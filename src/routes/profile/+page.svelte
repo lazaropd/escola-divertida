@@ -70,6 +70,7 @@
             ensino_religioso: 'Pular',
             geografia: 'Pular',
             historia: 'Pular',
+            lingua_portuguesa: 'Pular',
             lingua_inglesa: 'Pular',
             matematica: 'Pular',
         };
@@ -116,48 +117,25 @@
 
     let disciplinas = [
         'Arte',
-        'Ciencias',
-        'Educacao Fisica',
+        'Ciências',
+        'Educacao Física',
         'Ensino Religioso',
         'Geografia',
-        'Historia',
+        'História',
         'Lingua Inglesa',
         'Lingua Portuguesa',
-        'Matematica',
+        'Matemática',
     ];
 
     let intensidades = ['Pular', 'Leve', 'Moderado', 'Intenso'];
+
 </script>
 
-<div class="container mx-auto p-4">
-    <h1 class="h1 text-primary-500">Perfil</h1>
+<div class="container mx-auto py-16">
 
     {#if session}
-        <div>
-            <h2 class="h2">Adicionar Jogador</h2>
-            <div class="card p-4 space-y-4">
-                <input class="input" type="text" placeholder="Apelido" bind:value={newPlayer.apelido} />
-                <select class="select" bind:value={newPlayer.ano_escolar}>
-                    {#each Array(9) as _, i}
-                        <option value={i + 1}>{i + 1}º Ano</option>
-                    {/each}
-                </select>
 
-                {#each disciplinas as disciplina, i}
-                    <div>
-                        <label class="label">{disciplina}</label>
-                        <select class="select" bind:value={newPlayer[disciplina.toLowerCase().replace(' ', '_')]}>
-                            {#each intensidades as intensidade}
-                                <option value={intensidade}>{intensidade}</option>
-                            {/each}
-                        </select>
-                    </div>
-                {/each}
-
-                <button class="btn variant-filled-primary" on:click={addPlayer}>Adicionar</button>
-            </div>
-
-            <h2 class="h2 mt-8">Jogadores</h2>
+            <h2 class="h3 text-secondary-500 mb-4">Jogadores</h2>
             {#each players as player}
                 <div class="card p-4 mt-4 flex justify-between items-center">
                     <div>
@@ -172,30 +150,64 @@
             {/each}
 
             {#if editingPlayer}
-                <div class="card p-4 mt-4">
-                    <h3 class="h3">Editar Jogador</h3>
-                    <input class="input" type="text" placeholder="Apelido" bind:value={editingPlayer.apelido} />
+                
+                <div class="card p-4 space-y-4">
+                    <h2 class="h4 text-tertiary-500 mb-4">Editar Jogador</h2>
+                    <label class="label">Jogador
+                    <input class="input p-2" type="text" placeholder="Apelido" bind:value={editingPlayer.apelido} />
+                    </label>
+                    <label class="label">Ano Escolar
                     <select class="select" bind:value={editingPlayer.ano_escolar}>
                         {#each Array(9) as _, i}
                             <option value={i + 1}>{i + 1}º Ano</option>
                         {/each}
-                    </select>
+                    </select></label>
 
                     {#each disciplinas as disciplina, i}
                         <div>
-                            <label class="label">{disciplina}</label>
-                            <select class="select" bind:value={editingPlayer[disciplina.toLowerCase().replace(' ', '_')]}>
+                            <label class="label">{disciplina}
+                            <select class="select" bind:value={editingPlayer[disciplina.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, '').replace(' ', '_')]}>
                                 {#each intensidades as intensidade}
                                     <option value={intensidade}>{intensidade}</option>
                                 {/each}
-                            </select>
+                            </select></label>
                         </div>
                     {/each}
                     <button class="btn variant-filled-primary" on:click={updatePlayer}>Atualizar</button>
                 </div>
             {/if}
-        </div>
+            
+
+        <div class="mt-8">
+            <h2 class="h3 text-primary-500 mb-4">Adicionar Jogador</h2>
+            <div class="card p-4 space-y-4">
+                <label class="label">Jogador
+                <input class="input p-2" type="text" placeholder="Apelido" bind:value={newPlayer.apelido} />
+                </label>
+                <label class="label">Ano Escolar
+                <select class="select" bind:value={newPlayer.ano_escolar}>
+                    {#each Array(9) as _, i}
+                        <option value={i + 1}>{i + 1}º Ano</option>
+                    {/each}
+                </select></label>
+
+                {#each disciplinas as disciplina, i}
+                    <div>
+                        <label class="label">{disciplina}
+                        <select class="select" bind:value={newPlayer[disciplina.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, '').replace(' ', '_')]}>
+                            {#each intensidades as intensidade}
+                                <option value={intensidade}>{intensidade}</option>
+                            {/each}
+                        </select></label>
+                    </div>
+                {/each}
+
+                <button class="btn variant-filled-primary" on:click={addPlayer}>Adicionar</button>
+            </div>
+</div>
+
     {:else}
         <p>Redirecionando...</p>
     {/if}
 </div>
+<div class="container mx-auto py-16"></div>
