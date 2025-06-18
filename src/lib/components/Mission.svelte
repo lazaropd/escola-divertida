@@ -29,7 +29,9 @@
             class="absolute rounded-full w-12 h-12 transition-transform duration-500"
             style="transform: translateX({count * 9}%) rotate(90deg); top: 50%; left:0%;"
             />
-		
+		<div class="flex flex-col items-center">
+        <button class="btn variant-filled-primary" on:click={advanceMission}>Avançar</button>
+		</div>
         <img src="/images/alien.png" alt="Planeta Alienígena" class="rounded-full w-12 h-12" style="right:0px"/>
     </div>
     {#if missionComplete}
