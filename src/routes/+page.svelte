@@ -57,8 +57,8 @@
         </section>
     </div>
     {:else}
-    <div class="flex justify-center items-center h-full">
-        <Login />
-    </div>
+        <div class="flex justify-center items-center h-full">
+            <Login />
+        </div>
     {/if}
 </div>
