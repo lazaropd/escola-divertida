@@ -10,7 +10,8 @@
 
     <div class="space-y-8">
         <section class="p-8 card flex">
-            <img src="/images/home1.png" alt="Crianças aprendendo" class="rounded-lg w-1/4 mr-4 object-contain" />
+            <img src="/images/home1.png" alt="Crianças aprendendo" class="rounded-lg w-1/4 mr-4 object-contain"  style="max-width: 200px;
+max-height: 200px;" />
             <div>
                 <h2 class="h4 text-primary-500 mb-4">Você está na Escola Divertida!</h2>
                 <p class="text-sm">
@@ -30,7 +31,8 @@
         </section>
 
         <section class="p-8 card flex">
-            <img src="/images/home3.png" alt="Aviso" class="rounded-lg w-1/4 mr-4 object-contain" />
+            <img src="/images/home3.png" alt="Aviso" class="rounded-lg w-1/4 mr-4 object-contain"  style="max-width: 200px;
+max-height: 200px;" />
             <div>
                 <h2 class="h4 text-tertiary-500 mb-4">Destaques Importantes e Uso Responsável</h2>
                 <p class="text-sm">
