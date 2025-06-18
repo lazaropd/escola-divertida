@@ -18,6 +18,12 @@
     let isLoadingExercise = false;
     let exerciseError: string | null = null;
 
+    // Variáveis para armazenar e exibir as informações da BNCC
+    let currentUnidadeTematica: string = "";
+    let currentObjetoConhecimento: string = "";
+    let currentCodigoObjetivo: string = "";
+    let currentObjetivoAprendizagem: string = ""; // Adicionado para consistência, embora não seja exibido no final
+
     // Função para buscar um novo lote de 10 exercícios da API do Gemini
     async function loadNewQuizBatch() {
         if (!localSelected || !localSelected.disciplina) {
@@ -29,6 +35,12 @@
         exerciseError = null;
         exercise = null; // Limpa o exercício atual enquanto carrega
 
+        // Define as informações da BNCC que serão usadas no prompt e exibidas
+        currentUnidadeTematica = "Mundo do trabalho"; // Exemplo: você pode precisar obter isso de algum lugar
+        currentObjetoConhecimento = "Matéria-prima e indústria"; // Exemplo: você pode precisar obter isso de algum lugar
+        currentCodigoObjetivo = "EF03GE05"; // Exemplo: você pode precisar obter isso de algum lugar
+        currentObjetivoAprendizagem = "Identificar alimentos, minerais e outros produtos cultivados e extraídos da natureza, comparando as atividades de trabalho em diferentes lugares (campo e cidade), a fim de reconhecer a importância dessas atividades para a indústria."; // Exemplo
+
         try {
             const response = await fetch('/api/generate-quiz', {
                 method: 'POST',
@@ -37,10 +49,10 @@
                 },
                 body: JSON.stringify({
                     disciplina: localSelected.disciplina,
-                    unidade_tematica: "Mundo do trabalho", // Exemplo: você pode precisar obter isso de algum lugar
-                    objeto_de_conhecimento: "Matéria-prima e indústria", // Exemplo: você pode precisar obter isso de algum lugar
-                    codigo_objetivo_de_aprendizagem: "EF03GE05", // Exemplo: você pode precisar obter isso de algum lugar
-                    objetivo_de_aprendizagem: "Identificar alimentos, minerais e outros produtos cultivados e extraídos da natureza, comparando as atividades de trabalho em diferentes lugares (campo e cidade), a fim de reconhecer a importância dessas atividades para a indústria.", // Exemplo
+                    unidade_tematica: currentUnidadeTematica,
+                    objeto_de_conhecimento: currentObjetoConhecimento,
+                    codigo_objetivo_de_aprendizagem: currentCodigoObjetivo,
+                    objetivo_de_aprendizagem: currentObjetivoAprendizagem,
                     ano_ensino_fundamental: localSelected.ano_escolar
                 })
             });
@@ -113,9 +125,9 @@
 
     function handlePlayerChange() {
 		if (localSelected) {
-            // Atualiza localSelected com a disciplina selecionada
-            localSelected = getSubject(localSelected);
-			selectedPlayer.set(localSelected);
+            // localSelected já é o objeto do jogador selecionado no dropdown.
+            // Apenas atualizamos a store selectedPlayer com as informações de disciplina.
+			selectedPlayer.set(getSubject(localSelected));
             loadNewQuizBatch(); // Inicia o carregamento do primeiro lote de exercícios
 		}
 	}
@@ -151,10 +163,18 @@
                     <p>Selecione um astronauta para iniciar a missão.</p>
                 {/if}
                 
+            {:else}
+                <p>Todas as missões foram completadas! Parabéns!</p>
             {/if}
         {/if}
 
     {:else}
         <p>Redirecionando...</p>
+    {/if}
+
+    {#if $selectedPlayer && currentCodigoObjetivo}
+        <p class="text-xs text-gray-500 mt-8 text-center">
+            Conteúdo: {$selectedPlayer.disciplina || ''} - {currentUnidadeTematica} - {currentObjetoConhecimento} - {currentCodigoObjetivo}
+        </p>
     {/if}
 </div>
