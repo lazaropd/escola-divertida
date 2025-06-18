@@ -20,7 +20,7 @@
         </section>
 
         <section class="p-8 card flex">
-            <img src="/images/home2.png" alt="Aprendizado divertido" class="rounded-lg w-1/4 mr-4 object-contain" />
+            <img src="/images/home2.png" alt="Aprendizado divertido" class="rounded-lg w-1/4 mr-4 object-contain" style="max-width: 200px; max-height: 200px;" />
             <div>
                 <h2 class="h4 text-secondary-500 mb-4">Sobre o Projeto</h2>
                 <p class="text-sm">
