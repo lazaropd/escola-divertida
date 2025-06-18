@@ -28,10 +28,14 @@
         <img src="/images/alien.png" alt="Planeta Alienígena" class="rounded-full" style="right:0px"/>
     </div>
     <div class="flex items-center pt-4">
-        <p class="text-sm">Contagem regressiva... {Math.max(11 - $missionCount, 0)}</p>
+        {#if $missionCount < 11}
+            <p class="text-sm">Contagem regressiva... {Math.max(11 - $missionCount, 0)}</p>
+        {:else}
+            <p class="text-md variant-filled-success">Missão concluída comandante!</p>
+        {/if}
     </div>
     {#if $missionComplete}
-        <div class="pt-8">
+        <div class="pt-4">
         <button class="btn variant-filled-success" on:click={resetMission}>Nova Aventura</button>
         </div>
     {/if}
