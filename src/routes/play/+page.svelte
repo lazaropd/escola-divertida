@@ -15,8 +15,6 @@
     let isLoadingExercise = false;
     let exerciseError: string | null = null;
 
-    // Removido o array 'exercises' hardcoded
-
     // Função para sortear um novo exercício (agora busca da API)
     async function getNewExercise() {
         if (!localSelected || !localSelected.disciplina) {
@@ -36,10 +34,10 @@
                 },
                 body: JSON.stringify({
                     disciplina: localSelected.disciplina,
-                    unidade_tematica: "Conteúdo Geral", // Exemplo: você pode precisar obter isso de algum lugar
-                    objeto_de_conhecimento: "Conhecimentos Gerais", // Exemplo: você pode precisar obter isso de algum lugar
-                    codigo_objetivo_de_aprendizagem: "EF01CI01", // Exemplo: você pode precisar obter isso de algum lugar
-                    objetivo_de_aprendizagem: "Compreender conceitos básicos de diversas áreas do conhecimento.", // Exemplo
+                    unidade_tematica: "Mundo do trabalho", // Exemplo: você pode precisar obter isso de algum lugar
+                    objeto_de_conhecimento: "Matéria-prima e indústria", // Exemplo: você pode precisar obter isso de algum lugar
+                    codigo_objetivo_de_aprendizagem: "EF03GE05", // Exemplo: você pode precisar obter isso de algum lugar
+                    objetivo_de_aprendizagem: "Identificar alimentos, minerais e outros produtos cultivados e extraídos da natureza, comparando as atividades de trabalho em diferentes lugares (campo e cidade), a fim de reconhecer a importância dessas atividades para a indústria.", // Exemplo
                     ano_ensino_fundamental: localSelected.ano_escolar
                 })
             });
@@ -95,7 +93,8 @@
 
     function handlePlayerChange() {
 		if (localSelected) {
-			selectedPlayer.set(getSubject(localSelected));
+            localSelected = getSubject(localSelected);
+			selectedPlayer.set(localSelected);
             getNewExercise(); // Sorteia o primeiro exercício ao selecionar o jogador
 		}
 	}
@@ -110,7 +109,7 @@
 
         <h2 class="h4 text-secondary-500 mb-4 pt-4">Astronauta:</h2>
         <select class="select" bind:value={localSelected} on:change={handlePlayerChange}>
-            <option disabled selected value="">Selecione um jogador</option>
+            <option disabled selected value="">Selecione o comandante</option>
             {#each players as player}
                 <option value={player}>{player.apelido} ({player.ano_escolar}º Ano)</option>
             {/each}
@@ -121,7 +120,7 @@
 
             {#if $missionCount <= 10}
                 {#if isLoadingExercise}
-                    <p>Carregando nova missão...</p>
+                    <p>Adicionando combustível no foguete...</p>
                 {:else if exerciseError}
                     <p class="text-red-500">Erro: {exerciseError}</p>
                     <button class="btn variant-filled-primary mt-4" on:click={getNewExercise}>Tentar Novamente</button>
@@ -129,6 +128,8 @@
                     <!-- Ouve o evento 'nextExercise' do componente Exercise -->
                     <Exercise {exercise} on:nextExercise={getNewExercise} />
                 {:else}
+                {$selectedPlayer.disciplina} {localSelected.disciplina}
+                {exercise} {localSelected.apelido} {$selectedPlayer.disciplina} {getNewExercise()}
                     <p>Selecione um astronauta para iniciar a missão.</p>
                 {/if}
             {:else}
