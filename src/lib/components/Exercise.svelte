@@ -19,7 +19,7 @@
     }
 
     function checkAnswer() {
-        advanceMission;
+        advanceMission(); // Corrigido: agora a função advanceMission é realmente chamada
         isAnswerChecked = true;
         
     }
