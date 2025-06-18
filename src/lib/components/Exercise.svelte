@@ -7,14 +7,14 @@
         // Aqui você pode adicionar a lógica para verificar a resposta
         if (answer.toLowerCase() === "brasília") {
             result = "Resposta correta!";
-        } else {
+        } else {  
             result = "Resposta incorreta. Tente novamente.";
         }
     }
 </script>
 
 <div class="card p-4">
-    <h2 class="h2">{question}</h2>
+    <h4 class="h4">{question}</h4>
     <input type="text" class="input" placeholder="Sua resposta" bind:value={answer} />
     <button class="btn variant-filled-primary mt-2" on:click={checkAnswer}>Verificar</button>
     {#if result}

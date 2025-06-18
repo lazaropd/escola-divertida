@@ -31,9 +31,9 @@
         <div class="divider-vertical"></div>
         <a href="/api/generate-content" class="mx-2">Treinar</a>
         <div class="divider-vertical"></div>
-        <a href="/pontos" class="mx-2">Pontos</a>
+        <a href="/dashboard" class="mx-2">Pontos</a>
         <div class="divider-vertical"></div>
-        {#if isLoggedIn}
+        {#if session}
             <button class="btn variant-filled-secondary mx-2" on:click={signOut}>
                 Sair
             </button>
