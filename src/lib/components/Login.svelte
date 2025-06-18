@@ -24,7 +24,7 @@
         if (err) {
             error = err.message;
         } else {
-            session.set(data.session);
+            $session = data.session;
             goto('/dashboard');
         }
     }
