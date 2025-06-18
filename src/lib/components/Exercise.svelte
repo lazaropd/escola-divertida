@@ -1,5 +1,9 @@
 <script lang="ts">
-    import { advanceMission, missionCount } from '$lib/utils/missionUtils'; // Importa missionCount
+    import { advanceMission } from '$lib/utils/missionUtils'; // Importa missionCount
+    import { missionCount } from '$lib/stores';
+    import { createEventDispatcher } from 'svelte'; // Importa createEventDispatcher
+
+    const dispatch = createEventDispatcher();
 
     export let exercise: {
         question: string;
@@ -23,8 +27,10 @@
     }
 
     function nextMission() {
-        // Força o recarregamento da página para sortear a próxima pergunta
-        window.location.reload();
+        selectedOptionIndex = -1;
+        isAnswerChecked = false;
+        dispatch('nextExercise');
+
     }
 </script>
 

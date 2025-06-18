@@ -26,7 +26,7 @@
 
     // Função para buscar um novo lote de 10 exercícios da API do Gemini
     async function loadNewQuizBatch() {
-        if (!localSelected || !localSelected.disciplina) {
+        if (!localSelected || !$selectedPlayer.disciplina) {
             console.warn('Jogador ou disciplina não selecionados para gerar exercício.');
             return;
         }
@@ -48,7 +48,7 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    disciplina: localSelected.disciplina,
+                    disciplina: $selectedPlayer.disciplina,
                     unidade_tematica: currentUnidadeTematica,
                     objeto_de_conhecimento: currentObjetoConhecimento,
                     codigo_objetivo_de_aprendizagem: currentCodigoObjetivo,
@@ -151,7 +151,7 @@
 
             {#if $missionCount <= 10}
                 {#if isLoadingExercise}
-                    <p>Adicionando combustível no foguete...</p>
+                    <p class="h4 text-tertiary-500 mb-4 pt-4">Adicionando combustível no foguete, aguarde...</p>
                 {:else if exerciseError}
                     <p class="text-red-500">Erro: {exerciseError}</p>
                     <button class="btn variant-filled-primary mt-4" on:click={loadNewQuizBatch}>Tentar Novamente</button>
@@ -163,8 +163,6 @@
                     <p>Selecione um astronauta para iniciar a missão.</p>
                 {/if}
                 
-            {:else}
-                <p>Todas as missões foram completadas! Parabéns!</p>
             {/if}
         {/if}
 
@@ -174,7 +172,7 @@
 
     {#if $selectedPlayer && currentCodigoObjetivo}
         <p class="text-xs text-gray-500 mt-8 text-center">
-            Conteúdo: {$selectedPlayer.disciplina || ''} - {currentUnidadeTematica} - {currentObjetoConhecimento} - {currentCodigoObjetivo}
+            <b>({currentCodigoObjetivo})</b> {currentUnidadeTematica} - {currentObjetoConhecimento} ({$selectedPlayer.disciplina || ''})
         </p>
     {/if}
 </div>
