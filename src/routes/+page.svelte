@@ -12,7 +12,7 @@
         <section class="p-8 card flex">
             <img src="/images/home1.png" alt="Crianças aprendendo" class="rounded-lg w-1/4 mr-4 object-contain" />
             <div>
-                <h2 class="h4 text-primary-500 mb-4">Bem-vindo à Escola Divertida!</h2>
+                <h2 class="h4 text-primary-500 mb-4">Você está na Escola Divertida!</h2>
                 <p class="text-sm">
                     Explore um mundo de aprendizado interativo e divertido! Nossa plataforma oferece atividades educativas para crianças de 6 a 15 anos.
                 </p>
