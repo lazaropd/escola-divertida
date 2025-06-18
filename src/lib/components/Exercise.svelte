@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { advanceMission, recordQuizAttempt } from '$lib/utils/missionUtils'; // Importa recordQuizAttempt
+    import { advanceMission, recordQuizAttempt } from '$lib/utils/missionUtils';
     import { missionCount } from '$lib/stores';
-    import { createEventDispatcher } from 'svelte';
+    import { createEventDispatcher, onMount } from 'svelte'; // Importa onMount
 
     const dispatch = createEventDispatcher();
 
@@ -12,7 +12,6 @@
         explanation: string;
     };
 
-    // Novas props para registrar o quiz
     export let playerId: string;
     export let userId: string;
     export let subject: string;
@@ -21,18 +20,33 @@
 
     let selectedOptionIndex: number = -1;
     let isAnswerChecked: boolean = false;
+    let startTime: number; // Variável para armazenar o timestamp de início
+
+    // Inicia o timer quando o componente é montado
+    onMount(() => {
+        startTime = Date.now();
+    });
+
+    // Reinicia o timer sempre que um novo exercício é carregado (a prop 'exercise' muda)
+    $: if (exercise) {
+        startTime = Date.now();
+        selectedOptionIndex = -1; // Garante que a seleção anterior seja limpa
+        isAnswerChecked = false; // Garante que o estado de verificação seja resetado
+    }
 
     function selectOption(index: number) {
-        if (!isAnswerChecked) { // Permite selecionar apenas se a resposta ainda não foi verificada
+        if (!isAnswerChecked) {
             selectedOptionIndex = index;
         }
     }
 
-    async function checkAnswer() { // Tornar assíncrona para aguardar o registro
-        advanceMission(); // A função advanceMission é chamada ao verificar
+    async function checkAnswer() {
+        const endTime = Date.now();
+        const decisionTime = endTime - startTime; // Calcula o tempo de decisão em milissegundos
+
+        advanceMission();
         isAnswerChecked = true;
 
-        // Registrar a tentativa do quiz
         await recordQuizAttempt(
             playerId,
             userId,
@@ -42,14 +56,15 @@
             exercise.question,
             exercise.options,
             exercise.correctAnswerIndex,
-            selectedOptionIndex, // A resposta do usuário
-            exercise.explanation
+            selectedOptionIndex,
+            exercise.explanation,
+            decisionTime // Passa o tempo de decisão
         );
     }
 
     function nextMission() {
-        selectedOptionIndex = -1;
-        isAnswerChecked = false;
+        // O reset do estado (selectedOptionIndex, isAnswerChecked) é feito na reatividade do 'exercise'
+        // quando o componente pai despacha 'nextExercise' e fornece um novo 'exercise' prop.
         dispatch('nextExercise');
     }
 </script>
@@ -83,7 +98,7 @@
             Verificar
         </button>
 
-        {#if isAnswerChecked && $missionCount <= 10} <!-- Condição adicionada para mostrar o botão -->
+        {#if isAnswerChecked && $missionCount <= 10}
             <button
                 class="explanation-button px-5 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition-colors duration-200"
                 on:click={nextMission}
@@ -96,7 +111,6 @@
     {#if isAnswerChecked}
         <div class="feedback mt-4 p-3 rounded-md
                 {selectedOptionIndex === exercise.correctAnswerIndex ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
-            <!-- Exibe a explicação diretamente após a verificação -->
             {exercise.explanation}
         </div>
     {/if}
@@ -104,15 +118,15 @@
 
 <style>
     .option-button {
-        border: 1px solid #b1b1b1; /* Borda cinza clara */
+        border: 1px solid #b1b1b1;
     }
     .option-button.bg-gray-600 {
-        border-color: #333333; /* Borda cinza mais escura para selecionado */
+        border-color: #333333;
     }
     .option-button.bg-green-200 {
-        border-color: #a7f3d0; /* Borda verde para correto */
+        border-color: #a7f3d0;
     }
     .option-button.bg-red-200 {
-        border-color: #fecaca; /* Borda vermelha para incorreto */
+        border-color: #fecaca;
     }
 </style>

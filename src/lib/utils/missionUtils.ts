@@ -1,5 +1,5 @@
 import { missionCount, missionComplete } from '$lib/stores';
-import { supabase } from '$lib/supabaseClient'; // Importa o cliente Supabase
+import { supabase } from '$lib/supabaseClient';
 
 export function advanceMission() {
 	missionCount.update(count => {
@@ -56,7 +56,20 @@ export function getSubject(player) {
 	};
 }
 
-
+/**
+ * Registra uma tentativa de quiz no banco de dados.
+ * @param playerId O ID do jogador.
+ * @param userId O ID do usuário associado à sessão.
+ * @param knowledgeCode O código do objetivo de aprendizagem da BNCC.
+ * @param subject A disciplina da pergunta.
+ * @param schoolYear O ano escolar do jogador.
+ * @param question O enunciado da pergunta.
+ * @param options As opções da pergunta.
+ * @param correctAnswerIndex O índice da resposta correta.
+ * @param userAnswerIndex O índice da resposta selecionada pelo usuário.
+ * @param explanation A explicação da resposta.
+ * @param decisionTime O tempo (em ms) que o jogador levou para responder.
+ */
 export async function recordQuizAttempt(
     playerId: string,
     userId: string,
@@ -67,7 +80,8 @@ export async function recordQuizAttempt(
     options: string[],
     correctAnswerIndex: number,
     userAnswerIndex: number,
-    explanation: string
+    explanation: string,
+    decisionTime: number // Novo parâmetro
 ) {
     try {
         const { data, error } = await supabase
@@ -76,14 +90,15 @@ export async function recordQuizAttempt(
                 {
                     player_id: playerId,
                     user_id: userId,
-                    knowledge_code: knowledgeCode,
-                    subject: subject,
-                    school_year: schoolYear,
+                    codigo_objetivo_de_aprendizagem: knowledgeCode,
+                    disciplina: subject,
+                    ano_escolar: schoolYear,
                     question: question,
                     options: options,
                     correct_answer_index: correctAnswerIndex,
                     user_answer_index: userAnswerIndex,
-                    explanation: explanation
+                    explanation: explanation,
+                    decision_time: decisionTime // Novo campo
                 }
             ]);
 
