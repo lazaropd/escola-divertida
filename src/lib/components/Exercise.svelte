@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { advanceMission } from '$lib/utils/missionUtils'; // Importa missionCount
+    import { advanceMission, recordQuizAttempt } from '$lib/utils/missionUtils'; // Importa recordQuizAttempt
     import { missionCount } from '$lib/stores';
-    import { createEventDispatcher } from 'svelte'; // Importa createEventDispatcher
+    import { createEventDispatcher } from 'svelte';
 
     const dispatch = createEventDispatcher();
 
@@ -12,6 +12,13 @@
         explanation: string;
     };
 
+    // Novas props para registrar o quiz
+    export let playerId: string;
+    export let userId: string;
+    export let disciplina: string;
+    export let anoEscolar: number;
+    export let codigoObjetivo: string;
+
     let selectedOptionIndex: number = -1;
     let isAnswerChecked: boolean = false;
 
@@ -21,16 +28,29 @@
         }
     }
 
-    function checkAnswer() {
+    async function checkAnswer() { // Tornar assíncrona para aguardar o registro
         advanceMission(); // A função advanceMission é chamada ao verificar
         isAnswerChecked = true;
+
+        // Registrar a tentativa do quiz
+        await recordQuizAttempt(
+            playerId,
+            userId,
+            codigoObjetivo,
+            disciplina,
+            anoEscolar,
+            exercise.question,
+            exercise.options,
+            exercise.correctAnswerIndex,
+            selectedOptionIndex, // A resposta do usuário
+            exercise.explanation
+        );
     }
 
     function nextMission() {
         selectedOptionIndex = -1;
         isAnswerChecked = false;
         dispatch('nextExercise');
-
     }
 </script>
 

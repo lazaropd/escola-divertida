@@ -10,7 +10,7 @@
     let session;
     let user;
     let players = [];
-    let localSelected = null;
+    let localSelected = null; // Manterá o objeto player completo para o bind do select
     let exercise = null; // O exercício atual a ser exibido no componente Exercise
     let exercises: any[] = []; // Array para armazenar os 10 exercícios do Gemini
     let currentExerciseIndex: number = -1; // Índice do exercício atual no array 'exercises'
@@ -22,10 +22,11 @@
     let currentUnidadeTematica: string = "";
     let currentObjetoConhecimento: string = "";
     let currentCodigoObjetivo: string = "";
-    let currentObjetivoAprendizagem: string = ""; // Adicionado para consistência, embora não seja exibido no final
+    let currentObjetivoAprendizagem: string = "";
 
     // Função para buscar um novo lote de 10 exercícios da API do Gemini
     async function loadNewQuizBatch() {
+        // Usar localSelected.disciplina para o prompt, que é o nome da disciplina sorteada
         if (!localSelected || !$selectedPlayer.disciplina) {
             console.warn('Jogador ou disciplina não selecionados para gerar exercício.');
             return;
@@ -36,10 +37,12 @@
         exercise = null; // Limpa o exercício atual enquanto carrega
 
         // Define as informações da BNCC que serão usadas no prompt e exibidas
-        currentUnidadeTematica = "Mundo do trabalho"; // Exemplo: você pode precisar obter isso de algum lugar
-        currentObjetoConhecimento = "Matéria-prima e indústria"; // Exemplo: você pode precisar obter isso de algum lugar
-        currentCodigoObjetivo = "EF03GE05"; // Exemplo: você pode precisar obter isso de algum lugar
-        currentObjetivoAprendizagem = "Identificar alimentos, minerais e outros produtos cultivados e extraídos da natureza, comparando as atividades de trabalho em diferentes lugares (campo e cidade), a fim de reconhecer a importância dessas atividades para a indústria."; // Exemplo
+        // ATENÇÃO: Estes valores são fixos aqui. Em um cenário real, eles viriam de uma seleção do usuário
+        // ou de uma lógica mais complexa baseada no jogador/missão.
+        currentUnidadeTematica = "Mundo do trabalho";
+        currentObjetoConhecimento = "Matéria-prima e indústria";
+        currentCodigoObjetivo = "EF03GE05";
+        currentObjetivoAprendizagem = "Identificar alimentos, minerais e outros produtos cultivados e extraídos da natureza, comparando as atividades de trabalho em diferentes lugares (campo e cidade), a fim de reconhecer a importância dessas atividades para a indústria.";
 
         try {
             const response = await fetch('/api/generate-quiz', {
@@ -48,7 +51,7 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    disciplina: $selectedPlayer.disciplina,
+                    disciplina: $selectedPlayer.disciplina, // Usa a disciplina sorteada do jogador
                     unidade_tematica: currentUnidadeTematica,
                     objeto_de_conhecimento: currentObjetoConhecimento,
                     codigo_objetivo_de_aprendizagem: currentCodigoObjetivo,
@@ -72,7 +75,7 @@
             }
         } catch (error) {
             console.error('Erro ao buscar novo lote de exercícios:', error);
-            exerciseError = (error as Error).message || 'Erro desconhecido ao carregar exercícios.';
+            exerciseError = (error as Error).message || 'Erro desconhecido ao carregar exercício.';
         } finally {
             isLoadingExercise = false;
         }
@@ -126,7 +129,7 @@
     function handlePlayerChange() {
 		if (localSelected) {
             // localSelected já é o objeto do jogador selecionado no dropdown.
-            // Apenas atualizamos a store selectedPlayer com as informações de disciplina.
+            // A store selectedPlayer é atualizada com as informações de disciplina.
 			selectedPlayer.set(getSubject(localSelected));
             loadNewQuizBatch(); // Inicia o carregamento do primeiro lote de exercícios
 		}
@@ -157,7 +160,15 @@
                     <button class="btn variant-filled-primary mt-4" on:click={loadNewQuizBatch}>Tentar Novamente</button>
                 {:else if exercise}
                     <!-- Ouve o evento 'nextExercise' do componente Exercise -->
-                    <Exercise {exercise} on:nextExercise={showNextExercise} />
+                    <Exercise
+                        {exercise}
+                        on:nextExercise={showNextExercise}
+                        playerId={localSelected.id}
+                        userId={user.id}
+                        disciplina={localSelected.disciplina}
+                        anoEscolar={localSelected.ano_escolar}
+                        codigoObjetivo={currentCodigoObjetivo}
+                    />
                 {:else}
                     <!-- Estado inicial ou após todas as missões completadas -->
                     <p>Selecione um astronauta para iniciar a missão.</p>
@@ -172,7 +183,7 @@
 
     {#if $selectedPlayer && currentCodigoObjetivo}
         <p class="text-xs text-gray-500 mt-8 text-center">
-            <b>({currentCodigoObjetivo})</b> {currentUnidadeTematica} - {currentObjetoConhecimento} ({$selectedPlayer.disciplina || ''})
+            <b>({currentCodigoObjetivo})</b> {currentUnidadeTematica} - {currentObjetoConhecimento} ({localSelected?.disciplina || ''})
         </p>
     {/if}
 </div>

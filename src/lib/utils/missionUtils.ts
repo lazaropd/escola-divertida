@@ -1,4 +1,5 @@
 import { missionCount, missionComplete } from '$lib/stores';
+import { supabase } from '$lib/supabaseClient'; // Importa o cliente Supabase
 
 export function advanceMission() {
 	missionCount.update(count => {
@@ -10,13 +11,11 @@ export function advanceMission() {
 	});
 }
 
-
 export function resetMission() {
     missionCount.set(1);
     missionComplete.set(false);
 	window.location.reload();
 }
-
 
 export function getSubject(player) {
 	const pesoDisciplinas = {
@@ -55,4 +54,57 @@ export function getSubject(player) {
 		disciplinas: sorteioArray,
 		disciplina: subject
 	};
+}
+
+/**
+ * Registra uma tentativa de quiz no banco de dados.
+ * @param playerId O ID do jogador.
+ * @param userId O ID do usuário associado à sessão.
+ * @param codigoObjetivo O código do objetivo de aprendizagem da BNCC.
+ * @param disciplina A disciplina da pergunta.
+ * @param anoEscolar O ano escolar do jogador.
+ * @param question O enunciado da pergunta.
+ * @param options As opções da pergunta.
+ * @param correctAnswerIndex O índice da resposta correta.
+ * @param userAnswerIndex O índice da resposta selecionada pelo usuário.
+ * @param explanation A explicação da resposta.
+ */
+export async function recordQuizAttempt(
+    playerId: string,
+    userId: string,
+    codigoObjetivo: string,
+    disciplina: string,
+    anoEscolar: number,
+    question: string,
+    options: string[],
+    correctAnswerIndex: number,
+    userAnswerIndex: number,
+    explanation: string
+) {
+    try {
+        const { data, error } = await supabase
+            .from('quiz')
+            .insert([
+                {
+                    player_id: playerId,
+                    user_id: userId,
+                    codigo_objetivo_de_aprendizagem: codigoObjetivo,
+                    disciplina: disciplina,
+                    ano_escolar: anoEscolar,
+                    question: question,
+                    options: options,
+                    correct_answer_index: correctAnswerIndex,
+                    user_answer_index: userAnswerIndex,
+                    explanation: explanation
+                }
+            ]);
+
+        if (error) {
+            console.error('Erro ao registrar tentativa do quiz:', error);
+            throw error;
+        }
+        console.log('Tentativa do quiz registrada com sucesso:', data);
+    } catch (error) {
+        console.error('Falha ao registrar tentativa do quiz:', error);
+    }
 }
