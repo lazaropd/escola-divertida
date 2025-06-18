@@ -81,11 +81,14 @@
     async function deletePlayer(id) {
         const { error } = await supabase
             .from('players')
-            .delete()
+            .update({
+                status: 'inactive',
+                updated_at: new Date().toISOString(),
+            })
             .eq('id', id);
 
         if (error) {
-            console.error('Erro ao remover jogador:', error);
+            console.error('Erro ao inativar jogador:', error);
             return;
         }
 
@@ -103,6 +106,7 @@
             .from('players')
             .update({
                 ...editingPlayer,
+                updated_at: new Date().toISOString(),
             })
             .eq('id', editingPlayer.id);
 
