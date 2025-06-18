@@ -27,15 +27,18 @@
         <strong class="uppercase">Escola Divertida</strong>
     </svelte:fragment>
     <svelte:fragment slot="trail">
-        <a href="/" class="mr-4">Início</a>
-        <a href="/api/generate-content" class="mr-4">Treinar</a>
-        <a href="/dashboard" class="mr-4">Loja</a>
-        {#if session}
-            <button class="btn variant-filled-secondary" on:click={signOut}>
+        <a href="/" class="mx-2">Início</a>
+        <div class="divider-vertical"></div>
+        <a href="/api/generate-content" class="mx-2">Treinar</a>
+        <div class="divider-vertical"></div>
+        <a href="/pontos" class="mx-2">Pontos</a>
+        <div class="divider-vertical"></div>
+        {#if isLoggedIn}
+            <button class="btn variant-filled-secondary mx-2" on:click={signOut}>
                 Sair
             </button>
         {:else}
-            <a href="/login" class="btn variant-filled-secondary">Entrar</a>
+            <a href="/login" class="btn variant-filled-secondary mx-2">Entrar</a>
         {/if}
     </svelte:fragment>
 </AppBar>
