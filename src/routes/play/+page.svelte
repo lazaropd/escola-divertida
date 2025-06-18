@@ -4,7 +4,7 @@
     import { goto } from '$app/navigation';
 	import Exercise from '$lib/components/Exercise.svelte';
     import Mission from '$lib/components/Mission.svelte';
-    import { selectedPlayer } from '$lib/stores';
+    import { selectedPlayer, missionCount } from '$lib/stores';
     import { getSubject } from '$lib/utils/missionUtils';
 
 
@@ -102,7 +102,10 @@
 
 		{#if localSelected && $selectedPlayer && exercise}
             <Mission />
-            <Exercise {exercise} />
+
+            {#if $missionCount <= 10}
+                <Exercise {exercise} />
+            {/if}
         {/if}
 
     {:else}
