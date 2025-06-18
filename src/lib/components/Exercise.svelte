@@ -1,4 +1,7 @@
 <script lang="ts">
+
+    import { advanceMission } from '$lib/utils/missionUtils';
+
     export let exercise: {
         question: string;
         options: string[];
@@ -16,21 +19,23 @@
     }
 
     function checkAnswer() {
+        advanceMission;
         isAnswerChecked = true;
+        
     }
 </script>
 
-<div class="exercise-container p-4 bg-white rounded-lg shadow-md">
-    <h2 class="text-xl font-semibold mb-4">{exercise.question}</h2>
+<div class="exercise-container rounded-lg shadow-md pt-4">
+    <h2 class="text-l font-semibold mb-4">{exercise.question}</h2>
 
     <div class="options-grid grid grid-cols-1 gap-3 mb-4">
         {#each exercise.options as option, index}
             <button
-                class="option-button p-3 rounded-md text-left transition-colors duration-200
-                       {selectedOptionIndex === index && !isAnswerChecked ? 'bg-gray-200' : ''}
+                class="option-button p-2 text-sm rounded-md text-left transition-colors duration-200
+                       {selectedOptionIndex === index && !isAnswerChecked ? 'bg-gray-600' : ''}
                        {isAnswerChecked && index === exercise.correctAnswerIndex ? 'bg-green-200 text-green-800' : ''}
                        {isAnswerChecked && selectedOptionIndex === index && selectedOptionIndex !== exercise.correctAnswerIndex ? 'bg-red-200 text-red-800' : ''}
-                       {!isAnswerChecked ? 'hover:bg-gray-100 cursor-pointer' : 'cursor-not-allowed'}"
+                       {!isAnswerChecked ? 'hover:bg-gray-600 cursor-pointer' : 'cursor-not-allowed'}"
                 on:click={() => selectOption(index)}
                 disabled={isAnswerChecked}
             >
@@ -61,7 +66,7 @@
 
     {#if isAnswerChecked}
         <div class="feedback mt-4 p-3 rounded-md
-                    {selectedOptionIndex === exercise.correctAnswerIndex ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
+                {selectedOptionIndex === exercise.correctAnswerIndex ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
             {selectedOptionIndex === exercise.correctAnswerIndex ? 'Correto!' : 'Incorreto.'}
         </div>
     {/if}
@@ -69,10 +74,10 @@
 
 <style>
     .option-button {
-        border: 1px solid #e5e7eb; /* Borda cinza clara */
+        border: 1px solid #b1b1b1; /* Borda cinza clara */
     }
-    .option-button.bg-gray-200 {
-        border-color: #d1d5db; /* Borda cinza mais escura para selecionado */
+    .option-button.bg-gray-600 {
+        border-color: #333333; /* Borda cinza mais escura para selecionado */
     }
     .option-button.bg-green-200 {
         border-color: #a7f3d0; /* Borda verde para correto */
