@@ -15,8 +15,8 @@
         if (err) {
             error = err.message;
         } else {
+            session.set(data.session);
             goto('/dashboard');
-            
         }
     }
 </script>
