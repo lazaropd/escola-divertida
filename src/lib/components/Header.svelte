@@ -28,12 +28,15 @@
     </svelte:fragment>
     <svelte:fragment slot="trail">
         <a href="/" class="mx-2">Início</a>
+        
+        {#if session}
         <div class="divider-vertical"></div>
-        <a href="/api/generate-content" class="mx-2">Treinar</a>
+        <a href="/api/generate-content" class="mx-2">TBD</a>
         <div class="divider-vertical"></div>
         <a href="/dashboard" class="mx-2">Pontos</a>
         <div class="divider-vertical"></div>
-        {#if session}
+        <a href="/profile" class="mx-2">Perfil</a>
+        <div class="divider-vertical"></div>
             <button class="btn variant-filled-secondary mx-2" on:click={signOut}>
                 Sair
             </button>
