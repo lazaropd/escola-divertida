@@ -1,16 +1,7 @@
 <script lang="ts">
     import { supabase } from '$lib/supabaseClient';
-    import { goto } from '$app/navigation';
-    import { onMount } from 'svelte';
-    import { AppBar } from '@skeletonlabs/skeleton';
+    import { goto, invalidateAll } from '$app/navigation';
 
-    let session;
-
-    onMount(async () => {
-        const { data: { session: currentSession } } = await supabase.auth.getSession();
-        session = currentSession;
-    });
-    
     let email = '';
     let password = '';
     let error = '';
@@ -23,12 +14,9 @@
 
         if (err) {
             error = err.message;
-        if (err) {
-            error = err.message;
         } else {
-            $session = data.session;
-            goto('/dashboard');
-            window.location.reload();
+            await goto('/dashboard');
+            await invalidateAll();
         }
     }
 </script>
