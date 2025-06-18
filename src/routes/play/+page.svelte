@@ -150,8 +150,7 @@
                     <!-- Estado inicial ou após todas as missões completadas -->
                     <p>Selecione um astronauta para iniciar a missão.</p>
                 {/if}
-            {:else}
-                <p>Todas as missões foram completadas! Parabéns!</p>
+                
             {/if}
         {/if}
 
