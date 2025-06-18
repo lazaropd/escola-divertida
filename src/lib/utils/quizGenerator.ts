@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { GEMINI_API_KEY } from '$env/static/private'; 
+import { GEMINI_API_KEY } from '$env/static/private'; // Esta importação é válida apenas no lado do servidor
 
 // Define a interface para um único exercício/pergunta
 interface Exercise {
@@ -37,7 +37,11 @@ Formato de saída estritamente em JSON. Nada de texto fora do JSON.`;
         const response = await result.response;
         const text = response.text();
 
-        const exercises: Exercise[] = JSON.parse(text);
+        // O Gemini pode adicionar caracteres de formatação (como ```json)
+        // É crucial remover qualquer texto extra antes de fazer o JSON.parse
+        const jsonString = text.replace(/```json\n|```/g, '').trim();
+
+        const exercises: Exercise[] = JSON.parse(jsonString);
         return exercises;
     } catch (error) {
         console.error("Erro ao gerar perguntas do quiz:", error);

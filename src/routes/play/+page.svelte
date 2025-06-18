@@ -7,49 +7,61 @@
     import { selectedPlayer, missionCount } from '$lib/stores';
     import { getSubject } from '$lib/utils/missionUtils';
 
-
     let session;
     let user;
     let players = [];
     let localSelected = null;
     let exercise = null;
+    let isLoadingExercise = false;
+    let exerciseError: string | null = null;
 
-	const exercises = [
-		{
-			question: "Qual é a capital do Brasil?",
-			options: ["São Paulo", "Brasília", "Rio de Janeiro", "Salvador", "Campinas"],
-			correctAnswerIndex: 1,
-			explanation: "Brasília é a capital do Brasil desde 1960."
-		},
-		{
-			question: "Quanto é 7 x 8?",
-			options: ["56", "48", "64", "58", "49"],
-			correctAnswerIndex: 0,
-			explanation: "7 vezes 8 é igual a 56."
-		},
-		{
-			question: "Quem escreveu 'Dom Casmurro'?",
-			options: ["Machado de Assis", "José de Alencar", "Clarice Lispector", "Monteiro Lobato", "Graciliano Ramos"],
-			correctAnswerIndex: 0,
-			explanation: "Machado de Assis é o autor de Dom Casmurro."
-		},
-		{
-			question: "Qual é o maior planeta do sistema solar?",
-			options: ["Terra", "Júpiter", "Marte", "Saturno", "Netuno"],
-			correctAnswerIndex: 1,
-			explanation: "Júpiter é o maior planeta do sistema solar."
-		},
-		{
-			question: "Em que continente está o Egito?",
-			options: ["África", "Ásia", "Europa", "América do Sul", "Oceania"],
-			correctAnswerIndex: 0,
-			explanation: "O Egito está localizado no norte da África."
-		}
-	];
+    // Removido o array 'exercises' hardcoded
 
-    // Função para sortear um novo exercício
-    function getNewExercise() {
-        exercise = exercises[Math.floor(Math.random() * exercises.length)];
+    // Função para sortear um novo exercício (agora busca da API)
+    async function getNewExercise() {
+        if (!localSelected || !localSelected.disciplina) {
+            console.warn('Jogador ou disciplina não selecionados para gerar exercício.');
+            return;
+        }
+
+        isLoadingExercise = true;
+        exerciseError = null;
+        exercise = null; // Limpa o exercício anterior
+
+        try {
+            const response = await fetch('/api/generate-quiz', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    disciplina: localSelected.disciplina,
+                    unidade_tematica: "Conteúdo Geral", // Exemplo: você pode precisar obter isso de algum lugar
+                    objeto_de_conhecimento: "Conhecimentos Gerais", // Exemplo: você pode precisar obter isso de algum lugar
+                    codigo_objetivo_de_aprendizagem: "EF01CI01", // Exemplo: você pode precisar obter isso de algum lugar
+                    objetivo_de_aprendizagem: "Compreender conceitos básicos de diversas áreas do conhecimento.", // Exemplo
+                    ano_ensino_fundamental: localSelected.ano_escolar
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Falha ao buscar exercícios da API.');
+            }
+
+            const data = await response.json();
+            if (data.exercises && data.exercises.length > 0) {
+                // Seleciona um exercício aleatoriamente da lista retornada pela API
+                exercise = data.exercises[Math.floor(Math.random() * data.exercises.length)];
+            } else {
+                exerciseError = 'Nenhum exercício foi gerado pela API.';
+            }
+        } catch (error) {
+            console.error('Erro ao buscar novo exercício:', error);
+            exerciseError = (error as Error).message || 'Erro desconhecido ao carregar exercício.';
+        } finally {
+            isLoadingExercise = false;
+        }
     }
 
 
@@ -104,16 +116,27 @@
             {/each}
         </select>
 
-		{#if localSelected && $selectedPlayer && exercise}
+		{#if localSelected && $selectedPlayer}
             <Mission />
 
             {#if $missionCount <= 10}
-                <!-- Ouve o evento 'nextExercise' do componente Exercise -->
-                <Exercise {exercise} on:nextExercise={getNewExercise} />
+                {#if isLoadingExercise}
+                    <p>Carregando nova missão...</p>
+                {:else if exerciseError}
+                    <p class="text-red-500">Erro: {exerciseError}</p>
+                    <button class="btn variant-filled-primary mt-4" on:click={getNewExercise}>Tentar Novamente</button>
+                {:else if exercise}
+                    <!-- Ouve o evento 'nextExercise' do componente Exercise -->
+                    <Exercise {exercise} on:nextExercise={getNewExercise} />
+                {:else}
+                    <p>Selecione um astronauta para iniciar a missão.</p>
+                {/if}
+            {:else}
+                <p>Todas as missões foram completadas! Parabéns!</p>
             {/if}
         {/if}
 
     {:else}
-        <p>Redirecionando...</p> 
+        <p>Redirecionando...</p>
     {/if}
 </div>
