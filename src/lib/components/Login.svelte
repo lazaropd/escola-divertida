@@ -23,9 +23,12 @@
 
         if (err) {
             error = err.message;
+        if (err) {
+            error = err.message;
         } else {
             $session = data.session;
             goto('/dashboard');
+            window.location.reload();
         }
     }
 </script>
