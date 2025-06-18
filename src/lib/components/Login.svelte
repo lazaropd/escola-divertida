@@ -16,7 +16,7 @@
             error = err.message;
         } else {
             goto('/dashboard');
-            window.location.reload()
+            window.location.reload();
         }
     }
 </script>
