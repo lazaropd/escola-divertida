@@ -16,9 +16,7 @@
         if (error) {
             console.error('Erro ao fazer logout:', error);
         } else {
-            alert('Logout realizado com sucesso!');
             goto('/');
-            window.location.reload();
         }
     }
 </script>
