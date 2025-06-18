@@ -47,6 +47,10 @@
 		}
 	];
 
+    // Função para sortear um novo exercício
+    function getNewExercise() {
+        exercise = exercises[Math.floor(Math.random() * exercises.length)];
+    }
 
 
     onMount(async () => {
@@ -80,7 +84,7 @@
     function handlePlayerChange() {
 		if (localSelected) {
 			selectedPlayer.set(getSubject(localSelected));
-            exercise = exercises[Math.floor(Math.random() * exercises.length)];
+            getNewExercise(); // Sorteia o primeiro exercício ao selecionar o jogador
 		}
 	}
 
@@ -104,7 +108,8 @@
             <Mission />
 
             {#if $missionCount <= 10}
-                <Exercise {exercise} />
+                <!-- Ouve o evento 'nextExercise' do componente Exercise -->
+                <Exercise {exercise} on:nextExercise={getNewExercise} />
             {/if}
         {/if}
 
