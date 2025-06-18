@@ -15,7 +15,8 @@
         if (err) {
             error = err.message;
         } else {
-            await goto('/dashboard');
+            $session = data.session;
+            await goto('/pontos');
             await invalidateAll();
         }
     }
