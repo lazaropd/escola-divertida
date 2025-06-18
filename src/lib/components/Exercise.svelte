@@ -1,6 +1,7 @@
 <script lang="ts">
     import { advanceMission } from '$lib/utils/missionUtils';
 	import { LightSwitch } from '@skeletonlabs/skeleton';
+    
 	let quiz = {
 		question: "Qual é a capital do Brasil?",
 		options: [
