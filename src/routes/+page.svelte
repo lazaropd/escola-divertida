@@ -39,14 +39,14 @@
         <section class="p-8 card flex">
             <img src="/images/home3.png" alt="Aviso" class="rounded-lg w-1/4 mr-4 object-contain" />
             <div>
-                <h2 class="h3 text-tertiary-500 mb-4">Destaques Importantes e Uso Responsável</h2>
-                <p class="text-md">
+                <h2 class="h4 text-tertiary-500 mb-4">Destaques Importantes e Uso Responsável</h2>
+                <p class="text-sm">
                     Este é um projeto de desenvolvimento pessoal, sem fins lucrativos e sem qualquer vínculo com entidades governamentais, educacionais ou privadas.
                 </p>
-                <p class="text-md">
+                <p class="text-sm">
                     O objetivo principal é a exploração e o aprendizado através da aplicação prática de Inteligências Artificiais no desenvolvimento de software.
                 </p>
-                <p class="text-md">
+                <p class="text-sm">
                     O acompanhamento de um profissional capacitado da área da educação é indispensável para a formação de crianças. Este trabalho não substitui o papel da família, da sociedade e do Estado na educação.
                 </p>
             </div>
