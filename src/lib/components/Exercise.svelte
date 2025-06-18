@@ -15,9 +15,9 @@
     // Novas props para registrar o quiz
     export let playerId: string;
     export let userId: string;
-    export let disciplina: string;
-    export let anoEscolar: number;
-    export let codigoObjetivo: string;
+    export let subject: string;
+    export let schoolYear: number;
+    export let knowledgeCode: string;
 
     let selectedOptionIndex: number = -1;
     let isAnswerChecked: boolean = false;
@@ -36,9 +36,9 @@
         await recordQuizAttempt(
             playerId,
             userId,
-            codigoObjetivo,
-            disciplina,
-            anoEscolar,
+            knowledgeCode,
+            subject,
+            schoolYear,
             exercise.question,
             exercise.options,
             exercise.correctAnswerIndex,

@@ -26,7 +26,6 @@
 
     // Função para buscar um novo lote de 10 exercícios da API do Gemini
     async function loadNewQuizBatch() {
-        // Usar localSelected.disciplina para o prompt, que é o nome da disciplina sorteada
         if (!localSelected || !$selectedPlayer.disciplina) {
             console.warn('Jogador ou disciplina não selecionados para gerar exercício.');
             return;
@@ -165,9 +164,9 @@
                         on:nextExercise={showNextExercise}
                         playerId={localSelected.id}
                         userId={user.id}
-                        disciplina={localSelected.disciplina}
-                        anoEscolar={localSelected.ano_escolar}
-                        codigoObjetivo={currentCodigoObjetivo}
+                        subject={$selectedPlayer.disciplina}
+                        schoolYear={localSelected.ano_escolar}
+                        knowledgeCode={currentCodigoObjetivo}
                     />
                 {:else}
                     <!-- Estado inicial ou após todas as missões completadas -->
@@ -183,7 +182,7 @@
 
     {#if $selectedPlayer && currentCodigoObjetivo}
         <p class="text-xs text-gray-500 mt-8 text-center">
-            <b>({currentCodigoObjetivo})</b> {currentUnidadeTematica} - {currentObjetoConhecimento} ({localSelected?.disciplina || ''})
+            <b>({currentCodigoObjetivo})</b> {currentUnidadeTematica} - {currentObjetoConhecimento} ({$selectedPlayer.disciplina || ''})
         </p>
     {/if}
 </div>

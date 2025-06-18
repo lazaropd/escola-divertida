@@ -56,25 +56,13 @@ export function getSubject(player) {
 	};
 }
 
-/**
- * Registra uma tentativa de quiz no banco de dados.
- * @param playerId O ID do jogador.
- * @param userId O ID do usuário associado à sessão.
- * @param codigoObjetivo O código do objetivo de aprendizagem da BNCC.
- * @param disciplina A disciplina da pergunta.
- * @param anoEscolar O ano escolar do jogador.
- * @param question O enunciado da pergunta.
- * @param options As opções da pergunta.
- * @param correctAnswerIndex O índice da resposta correta.
- * @param userAnswerIndex O índice da resposta selecionada pelo usuário.
- * @param explanation A explicação da resposta.
- */
+
 export async function recordQuizAttempt(
     playerId: string,
     userId: string,
-    codigoObjetivo: string,
-    disciplina: string,
-    anoEscolar: number,
+    knowledgeCode: string,
+    subject: string,
+    schoolYear: number,
     question: string,
     options: string[],
     correctAnswerIndex: number,
@@ -88,9 +76,9 @@ export async function recordQuizAttempt(
                 {
                     player_id: playerId,
                     user_id: userId,
-                    codigo_objetivo_de_aprendizagem: codigoObjetivo,
-                    disciplina: disciplina,
-                    ano_escolar: anoEscolar,
+                    knowledge_code: knowledgeCode,
+                    subject: subject,
+                    school_year: schoolYear,
                     question: question,
                     options: options,
                     correct_answer_index: correctAnswerIndex,
