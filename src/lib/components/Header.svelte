@@ -35,6 +35,8 @@
             <button class="btn variant-filled-secondary" on:click={signOut}>
                 Sair
             </button>
+        {:else}
+            <a href="/login" class="mr-4">Entrar</a>
         {/if}
     </svelte:fragment>
 </AppBar>
