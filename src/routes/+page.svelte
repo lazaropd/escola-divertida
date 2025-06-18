@@ -19,7 +19,7 @@
         <section class="p-8 card flex">
             <img src="/images/home1.png" alt="Crianças aprendendo" class="rounded-lg w-1/4 mr-4 object-contain" />
             <div>
-                <h2 class="h3 text-primary-500 mb-2">Bem-vindo à Escola Divertida!</h2>
+                <h2 class="h3 text-primary-500 mb-4">Bem-vindo à Escola Divertida!</h2>
                 <p class="text-md">
                     Explore um mundo de aprendizado interativo e divertido! Nossa plataforma oferece atividades educativas para crianças de 6 a 15 anos.
                 </p>
@@ -29,7 +29,7 @@
         <section class="p-8 card flex">
             <img src="/images/home2.png" alt="Aprendizado divertido" class="rounded-lg w-1/4 mr-4 object-contain" />
             <div>
-                <h2 class="h3 text-secondary-500 mb-2">Sobre o Projeto</h2>
+                <h2 class="h3 text-secondary-500 mb-4">Sobre o Projeto</h2>
                 <p class="text-md">
                     A Escola Divertida é um projeto desenvolvido para tornar o aprendizado mais acessível e envolvente para crianças. Utilizamos tecnologias modernas e conteúdos criativos para estimular o interesse e a curiosidade dos alunos.
                 </p>
@@ -48,9 +48,6 @@
                 </p>
                 <p class="text-md">
                     O acompanhamento de um profissional capacitado da área da educação é indispensável para a formação de crianças. Este trabalho não substitui o papel da família, da sociedade e do Estado na educação.
-                </p>
-                <p class="text-md">
-                    Todo o trabalho, ideias e insights gerados podem ser livremente compartilhados, desde que os créditos sejam mantidos ao criador original: Lazaro Pinheiro Domiciano.
                 </p>
             </div>
         </section>
