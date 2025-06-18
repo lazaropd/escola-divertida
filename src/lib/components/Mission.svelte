@@ -3,39 +3,24 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { missionCount, missionComplete } from '$lib/stores';
-
-    function advanceMission() {
-        if ($missionCount < 11) {
-            $missionCount++;
-        }
-        if ($missionCount === 11) {
-            $missionComplete = true;
-        }
-    }
-
-    function resetMission() {
-        $missionCount = 1;
-        $missionComplete = false;
-    }
+    import { advanceMission, resetMission } from '$lib/utils/missionUtils';
 </script>
 
-<div class="card p-4">
-    <h3 class="h3">Missão Espacial</h3>
+<div class="card p-8 mt-4 ">
     <div class="flex items-center justify-between relative">
-        <img src="/images/earth.png" alt="Terra" class="rounded-full w-12 h-12" />
+        <img src="/images/earth.png" alt="Terra" class="rounded-full" />
         <img
             src="/images/rocket.png"
             alt="Foguete"
-            class="absolute rounded-full w-12 h-12 transition-transform duration-500"
-            style="transform: translateX({$missionCount * 9}%) rotate(90deg); top: 50%; left:0%;"
+            class="absolute rounded-full transition-transform duration-500"
+            style="transform: translateX({($missionCount - 1) * 10}%) rotate(90deg); top: 0%; left:0%;"
             />
 		
-        <img src="/images/alien.png" alt="Planeta Alienígena" class="rounded-full w-12 h-12" style="right:0px"/>
-        <div class="flex flex-col items-center">
-        <button class="btn variant-filled-primary" on:click={advanceMission}>Avançar</button>
-		</div>
+        <img src="/images/alien.png" alt="Planeta Alienígena" class="rounded-full" style="right:0px"/>
     </div>
     {#if $missionComplete}
+        <div class="pt-8">
         <button class="btn variant-filled-success" on:click={resetMission}>Nova Aventura</button>
+        </div>
     {/if}
 </div>
