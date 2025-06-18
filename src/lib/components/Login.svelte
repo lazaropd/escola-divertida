@@ -15,7 +15,6 @@
         if (err) {
             error = err.message;
         } else {
-            window.location.reload();
             goto('/dashboard');
             
         }
