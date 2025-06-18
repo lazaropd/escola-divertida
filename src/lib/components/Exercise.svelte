@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { advanceMission } from '$lib/utils/missionUtils';
+    import { advanceMission, missionCount } from '$lib/utils/missionUtils'; // Importa missionCount
 
     export let exercise: {
         question: string;
@@ -23,11 +23,8 @@
     }
 
     function nextMission() {
-        // Redefine o estado do componente para preparar para a próxima missão/exercício
-        selectedOptionIndex = -1;
-        isAnswerChecked = false;
-        // O componente pai é responsável por fornecer um novo 'exercise' prop
-        // ou por avançar para a próxima missão na lógica geral do jogo.
+        // Força o recarregamento da página para sortear a próxima pergunta
+        window.location.reload();
     }
 </script>
 
@@ -60,7 +57,7 @@
             Verificar
         </button>
 
-        {#if isAnswerChecked}
+        {#if isAnswerChecked && $missionCount <= 10} <!-- Condição adicionada para mostrar o botão -->
             <button
                 class="explanation-button px-5 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition-colors duration-200"
                 on:click={nextMission}
