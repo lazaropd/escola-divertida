@@ -1,65 +1,83 @@
 <script lang="ts">
-    import { advanceMission } from '$lib/utils/missionUtils';
-	import { LightSwitch } from '@skeletonlabs/skeleton';
-    
-	let quiz = {
-		question: "Qual é a capital do Brasil?",
-		options: [
-			"Rio de Janeiro",
-			"São Paulo",
-			"Brasília",
-			"Salvador",
-			"Belo Horizonte",
-			"Curitiba"
-		],
-		correctAnswer: "Brasília",
-		explanation: "Brasília é a capital do Brasil desde 1960, quando substituiu o Rio de Janeiro.",
-		disciplina: "Geografia"
-	};
+    export let exercise: {
+        question: string;
+        options: string[];
+        correctAnswerIndex: number;
+        explanation: string;
+    };
 
-    let selectedAnswer = "";
-    let result = "";
-	let showExplanation = false;
+    let selectedOptionIndex: number = -1;
+    let isAnswerChecked: boolean = false;
 
-    async function checkAnswer() {
-        if (selectedAnswer === quiz.correctAnswer) {
-            result = "Resposta correta!";
-			advanceMission();
-        } else {  
-            result = "Resposta incorreta. Tente novamente.";
+    function selectOption(index: number) {
+        if (!isAnswerChecked) { // Permite selecionar apenas se a resposta ainda não foi verificada
+            selectedOptionIndex = index;
         }
     }
 
-	function toggleExplanation() {
-		showExplanation = !showExplanation;
-	}
+    function checkAnswer() {
+        isAnswerChecked = true;
+    }
 </script>
 
-<div class="card p-4 mt-4">
-    <h4 class="h4">{quiz.question}</h4>
-	<div class="space-y-2">
-		{#each quiz.options as option}
-			<label class="flex items-center space-x-2">
-				<input type="radio" class="radio" name="answer" value={option} bind:group={selectedAnswer} />
-				<span>{option}</span>
-				{#if option === quiz.correctAnswer && result === "Resposta correta!"}
-					<span class="text-green-500">✓</span>
-				{/if}
-			</label>
-		{/each}
-	</div>
-    <button class="btn variant-filled-primary mt-4" on:click={checkAnswer}>Verificar</button>
-    {#if result}
-        <p class="mt-2">{result}</p>
-    {/if}
-	<button class="btn variant-filled-secondary mt-2" on:click={toggleExplanation}>
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" class="mr-2"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
-		Explicação
-	</button>
+<div class="exercise-container p-4 bg-white rounded-lg shadow-md">
+    <h2 class="text-xl font-semibold mb-4">{exercise.question}</h2>
 
-	{#if showExplanation}
-		<div class="alert variant-filled-info mt-4">
-			{quiz.explanation}
-		</div>
-	{/if}
+    <div class="options-grid grid grid-cols-1 gap-3 mb-4">
+        {#each exercise.options as option, index}
+            <button
+                class="option-button p-3 rounded-md text-left transition-colors duration-200
+                       {selectedOptionIndex === index && !isAnswerChecked ? 'bg-gray-200' : ''}
+                       {isAnswerChecked && index === exercise.correctAnswerIndex ? 'bg-green-200 text-green-800' : ''}
+                       {isAnswerChecked && selectedOptionIndex === index && selectedOptionIndex !== exercise.correctAnswerIndex ? 'bg-red-200 text-red-800' : ''}
+                       {!isAnswerChecked ? 'hover:bg-gray-100 cursor-pointer' : 'cursor-not-allowed'}"
+                on:click={() => selectOption(index)}
+                disabled={isAnswerChecked}
+            >
+                {option}
+            </button>
+        {/each}
+    </div>
+
+    <div class="actions flex justify-between items-center">
+        <button
+            class="check-button px-5 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200
+                   {selectedOptionIndex === -1 || isAnswerChecked ? 'opacity-50 cursor-not-allowed' : ''}"
+            on:click={checkAnswer}
+            disabled={selectedOptionIndex === -1 || isAnswerChecked}
+        >
+            Verificar
+        </button>
+
+        {#if isAnswerChecked}
+            <button
+                class="explanation-button px-5 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition-colors duration-200"
+                on:click={() => alert(exercise.explanation)}
+            >
+                Explicação
+            </button>
+        {/if}
+    </div>
+
+    {#if isAnswerChecked}
+        <div class="feedback mt-4 p-3 rounded-md
+                    {selectedOptionIndex === exercise.correctAnswerIndex ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
+            {selectedOptionIndex === exercise.correctAnswerIndex ? 'Correto!' : 'Incorreto.'}
+        </div>
+    {/if}
 </div>
+
+<style>
+    .option-button {
+        border: 1px solid #e5e7eb; /* Borda cinza clara */
+    }
+    .option-button.bg-gray-200 {
+        border-color: #d1d5db; /* Borda cinza mais escura para selecionado */
+    }
+    .option-button.bg-green-200 {
+        border-color: #a7f3d0; /* Borda verde para correto */
+    }
+    .option-button.bg-red-200 {
+        border-color: #fecaca; /* Borda vermelha para incorreto */
+    }
+</style>
