@@ -1,5 +1,4 @@
 <script lang="ts">
-
     import { advanceMission } from '$lib/utils/missionUtils';
 
     export let exercise: {
@@ -19,9 +18,16 @@
     }
 
     function checkAnswer() {
-        advanceMission(); // Corrigido: agora a função advanceMission é realmente chamada
+        advanceMission(); // A função advanceMission é chamada ao verificar
         isAnswerChecked = true;
-        
+    }
+
+    function nextMission() {
+        // Redefine o estado do componente para preparar para a próxima missão/exercício
+        selectedOptionIndex = -1;
+        isAnswerChecked = false;
+        // O componente pai é responsável por fornecer um novo 'exercise' prop
+        // ou por avançar para a próxima missão na lógica geral do jogo.
     }
 </script>
 
@@ -57,9 +63,9 @@
         {#if isAnswerChecked}
             <button
                 class="explanation-button px-5 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition-colors duration-200"
-                on:click={() => alert(exercise.explanation)}
+                on:click={nextMission}
             >
-                Explicação
+                Próxima Missão
             </button>
         {/if}
     </div>
@@ -67,7 +73,8 @@
     {#if isAnswerChecked}
         <div class="feedback mt-4 p-3 rounded-md
                 {selectedOptionIndex === exercise.correctAnswerIndex ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
-            {selectedOptionIndex === exercise.correctAnswerIndex ? 'Correto!' : 'Incorreto.'}
+            <!-- Exibe a explicação diretamente após a verificação -->
+            {exercise.explanation}
         </div>
     {/if}
 </div>
