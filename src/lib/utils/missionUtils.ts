@@ -1,15 +1,16 @@
 import { missionCount, missionComplete } from '$lib/stores';
 
 export function advanceMission() {
-    if ($missionCount < 11) {
-        $missionCount++;
-    }
-    if ($missionCount === 11) {
-        $missionComplete = true;
-    }
+	missionCount.update(count => {
+		const next = count + 1;
+		if (next === 11) {
+			missionComplete.set(true);
+		}
+		return next > 11 ? count : next;
+	});
 }
 
 export function resetMission() {
-    $missionCount = 1;
-    $missionComplete = false;
+    missionCount.set(1);
+    missionComplete.set(false);
 }

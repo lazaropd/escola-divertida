@@ -22,7 +22,7 @@
 </script>
 
 <div class="container mx-auto py-16">
-    <h1 class="h3 text-primary-500">Jogar</h1>
+    <h1 class="h3 text-primary-500">Nossa Missão Espacial</h1>
 
     {#if session}
 

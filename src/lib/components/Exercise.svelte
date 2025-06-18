@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { missionCount, missionComplete } from '$lib/stores';
+    import { advanceMission } from '$lib/utils/missionUtils';
 
     let question = "Qual é a capital do Brasil?";
     let answer = "";
@@ -13,19 +13,12 @@
         } else {  
             result = "Resposta incorreta. Tente novamente.";
         }
+        advanceMission();
     }
 
-	function advanceMission() {
-        if ($missionCount < 11) {
-            $missionCount++;
-        }
-        if ($missionCount === 11) {
-            $missionComplete = true;
-        }
-    }
 </script>
 
-<div class="card p-4">
+<div class="card p-4 mt-4 ">
     <h4 class="h4">{question}</h4>
     <input type="text" class="input" placeholder="Sua resposta" bind:value={answer} />
     <button class="btn variant-filled-primary mt-2" on:click={checkAnswer}>Verificar</button>
