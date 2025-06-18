@@ -19,8 +19,8 @@
         <section class="p-8 card flex">
             <img src="/images/home1.png" alt="Crianças aprendendo" class="rounded-lg w-1/4 mr-4 object-contain" />
             <div>
-                <h2 class="h3 text-primary-500 mb-4">Bem-vindo à Escola Divertida!</h2>
-                <p class="text-md">
+                <h2 class="h4 text-primary-500 mb-4">Bem-vindo à Escola Divertida!</h2>
+                <p class="text-sm">
                     Explore um mundo de aprendizado interativo e divertido! Nossa plataforma oferece atividades educativas para crianças de 6 a 15 anos.
                 </p>
             </div>
@@ -29,8 +29,8 @@
         <section class="p-8 card flex">
             <img src="/images/home2.png" alt="Aprendizado divertido" class="rounded-lg w-1/4 mr-4 object-contain" />
             <div>
-                <h2 class="h3 text-secondary-500 mb-4">Sobre o Projeto</h2>
-                <p class="text-md">
+                <h2 class="h4 text-secondary-500 mb-4">Sobre o Projeto</h2>
+                <p class="text-sm">
                     A Escola Divertida é um projeto desenvolvido para tornar o aprendizado mais acessível e envolvente para crianças. Utilizamos tecnologias modernas e conteúdos criativos para estimular o interesse e a curiosidade dos alunos.
                 </p>
             </div>
