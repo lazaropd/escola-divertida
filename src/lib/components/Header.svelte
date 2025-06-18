@@ -43,5 +43,7 @@
         {:else}
             <a href="/login" class="btn variant-filled-secondary mx-2">Entrar</a>
         {/if}
+		<div class="divider-vertical"></div>
+		<a href="/play" class="mx-2">Jogar</a>
     </svelte:fragment>
 </AppBar>
