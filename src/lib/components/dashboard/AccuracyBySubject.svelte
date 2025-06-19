@@ -10,6 +10,7 @@
         LineElement, // Necessário para o gráfico de linha
         CategoryScale,
         LinearScale,
+        LineController,
         PointElement // Necessário para os pontos na linha
     } from 'chart.js';
 
@@ -22,7 +23,8 @@
         LineElement,
         CategoryScale,
         LinearScale,
-        PointElement
+        PointElement,
+        LineController 
     );
 
     export let data: PlayerAccuracyBySubject[]; // Recebe um array de PlayerAccuracyBySubject
@@ -117,10 +119,10 @@
     };
 </script>
 
-<div class="card p-4 mb-4">
-    <h4 class="h5">Taxa de Acertos por Disciplina</h4>
+<div class="card p-4 mb-4" style="background-color: white;">
+    <h4 class="h5 text-gray-500 text-sm">Taxa de Acertos por Disciplina</h4>
     {#if data.length > 0}
-        <div style="height: 350px;"> <!-- Define uma altura para o gráfico -->
+        <div style="height: 180px;"> <!-- Define uma altura para o gráfico -->
             <Chart type="bar" data={chartData} options={chartOptions} />
         </div>
     {:else}

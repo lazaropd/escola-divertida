@@ -156,12 +156,12 @@
 
             {#if editingPlayer}
                 
-                <div class="card p-4 space-y-4">
+                <div class="card p-4 space-y-1">
                     <h2 class="h4 text-tertiary-500 mb-4">Editar Jogador</h2>
-                    <label class="label">Jogador
+                    <label class="label text-sm">Jogador
                     <input class="input p-2" type="text" placeholder="Apelido" bind:value={editingPlayer.apelido} />
                     </label>
-                    <label class="label">Ano Escolar
+                    <label class="label text-sm">Ano Escolar
                     <select class="select" bind:value={editingPlayer.ano_escolar}>
                         {#each Array(9) as _, i}
                             <option value={i + 1}>{i + 1}º Ano</option>
@@ -170,7 +170,7 @@
 
                     {#each disciplinas as disciplina, i}
                         <div>
-                            <label class="label">{disciplina}
+                            <label class="label text-sm">{disciplina}
                             <select class="select" bind:value={editingPlayer[disciplina.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, '').replace(' ', '_')]}>
                                 {#each intensidades as intensidade}
                                     <option value={intensidade}>{intensidade}</option>
@@ -185,20 +185,20 @@
 
         <div class="mt-8">
             <h2 class="h3 text-primary-500 mb-4">Adicionar Jogador</h2>
-            <div class="card p-4 space-y-4">
-                <label class="label">Jogador
-                <input class="input p-2" type="text" placeholder="Apelido" bind:value={newPlayer.apelido} />
+            <div class="card p-4 space-y-1">
+                <label class="label text-sm">Jogador
+                <input class="input p-2 text-sm" type="text" placeholder="Apelido" bind:value={newPlayer.apelido} />
                 </label>
-                <label class="label">Ano Escolar
-                <select class="select" bind:value={newPlayer.ano_escolar}>
+                <label class="label text-sm">Ano Escolar
+                <select class="select text-sm" bind:value={newPlayer.ano_escolar}>
                     {#each Array(9) as _, i}
-                        <option value={i + 1}>{i + 1}º Ano</option>
+                        <option class="text-sm" value={i + 1}>{i + 1}º Ano</option>
                     {/each}
                 </select></label>
 
                 {#each disciplinas as disciplina, i}
                     <div>
-                        <label class="label">{disciplina}
+                        <label class="label text-sm">{disciplina}
                         <select class="select" bind:value={newPlayer[disciplina.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, '').replace(' ', '_')]}>
                             {#each intensidades as intensidade}
                                 <option value={intensidade}>{intensidade}</option>

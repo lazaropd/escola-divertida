@@ -97,16 +97,16 @@
     <h1 class="h3 text-primary-500">Dashboard de Progresso</h1>
 
     {#if session}
-        <div class="card p-4 mb-8">
-            <h3 class="h4">Filtrar por Período</h3>
+        <div class="card p-4 mb-4 mt-4">
+            <h3 class="h4 text-sm">Filtrar por Período</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label for="startDate" class="label">Data de Início</label>
-                    <input type="date" id="startDate" class="input" bind:value={startDate} />
+                    <label for="startDate" class="label text-sm">Data de Início</label>
+                    <input type="date" id="startDate" class="input p-2" bind:value={startDate} />
                 </div>
                 <div>
-                    <label for="endDate" class="label">Data de Fim</label>
-                    <input type="date" id="endDate" class="input" bind:value={endDate} />
+                    <label for="endDate" class="label text-sm">Data de Fim</label>
+                    <input type="date" id="endDate" class="input p-2" bind:value={endDate} />
                 </div>
             </div>
         </div>
@@ -122,19 +122,22 @@
             <p class="h4 text-secondary-500 mb-4 pt-4">Nenhum dado encontrado para o período selecionado.</p>
         {:else}
             {#each Array.from(playersData.entries()) as [playerId, playerRecords]}
-                <div class="card p-6 mb-8">
-                    <h2 class="h3 text-primary-500 mb-4">Astronauta: {playerRecords[0].apelido}</h2>
+                <div class="card p-6 mb-4">
+                    <h2 class="h5 text-secondary-500 mb-4 text-md">Astronauta: {playerRecords[0].apelido}</h2>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <ActivityChart data={processActivitySummary(playerRecords)} />
+                    <div class="mt-4"> 
                         <OverallAccuracy data={processOverallAccuracy(playerRecords)} />
                     </div>
 
-                    <div class="mt-8">
+                    <div class="mt-4"> 
+                        <ActivityChart data={processActivitySummary(playerRecords)} />
+                    </div>
+
+                    <div class="mt-4"> 
                         <AccuracyBySubject data={processAccuracyBySubject(playerRecords)} />
                     </div>
 
-                    <div class="mt-8">
+                    <div class="mt-4">
                         <DetailedSummary data={processDetailedSummary(playerRecords)} />
                     </div>
                 </div>

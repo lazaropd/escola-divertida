@@ -195,7 +195,7 @@
 
     {#if session}
 
-        <h2 class="h4 text-secondary-500 mb-4 pt-4">Astronauta:</h2>
+        <h2 class="h5 text-secondary-500 pt-2">Astronauta:</h2>
         <select class="select" bind:value={localSelected} on:change={handlePlayerChange}>
             <option disabled selected value="">Selecione o comandante</option>
             {#each players as player}

@@ -70,9 +70,9 @@
 </script>
 
 <div class="exercise-container rounded-lg shadow-md pt-4">
-    <h2 class="text-l font-semibold mb-4">{exercise.question}</h2>
+    <h2 class="text-l font-semibold mb-2">{exercise.question}</h2>
 
-    <div class="options-grid grid grid-cols-1 gap-3 mb-4">
+    <div class="options-grid grid grid-cols-1 gap-2 mb-2">
         {#each exercise.options as option, index}
             <button
                 class="option-button p-2 text-sm rounded-md text-left transition-colors duration-200
@@ -95,7 +95,7 @@
             on:click={checkAnswer}
             disabled={selectedOptionIndex === -1 || isAnswerChecked}
         >
-            Verificar
+            Conferir
         </button>
 
         {#if isAnswerChecked && $missionCount <= 10}
@@ -109,7 +109,7 @@
     </div>
 
     {#if isAnswerChecked}
-        <div class="feedback mt-4 p-3 rounded-md
+        <div class="feedback mt-4 p-2 rounded-md text-sm
                 {selectedOptionIndex === exercise.correctAnswerIndex ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
             {exercise.explanation}
         </div>

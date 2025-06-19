@@ -10,6 +10,7 @@
         LineElement, // Necessário para o gráfico de linha
         CategoryScale,
         LinearScale,
+        BarController,
         PointElement, // Necessário para os pontos na linha
         LineController // Necessário para o tipo de gráfico de linha
     } from 'chart.js';
@@ -24,6 +25,7 @@
         CategoryScale,
         LinearScale,
         PointElement,
+        BarController,
         LineController // Garante que o LineController esteja registrado
     );
 
@@ -125,10 +127,10 @@
     };
 </script>
 
-<div class="card p-4 mb-4">
-    <h4 class="h5">Atividade por Data</h4>
+<div class="card p-4 mb-4" style="background-color: white;">
+    <h4 class="h5 text-gray-500 text-sm">Atividade por Data</h4>
     {#if data.length > 0}
-        <div style="height: 350px;"> <!-- Define uma altura para o gráfico -->
+        <div style="height: 180px;"> <!-- Define uma altura para o gráfico -->
             <Chart type="bar" data={chartData} options={chartOptions} />
         </div>
     {:else}

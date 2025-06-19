@@ -15,7 +15,7 @@
 	}
 </script>
 
-<div class="card p-8 mt-4 ">
+<div class="card p-4 mt-2 ">
     <div class="flex items-center justify-between relative" bind:this={containerEl}>
         <img src="/images/earth.png" alt="Terra" class="rounded-full" />
         <img

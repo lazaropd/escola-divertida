@@ -5,14 +5,14 @@
 </script>
 
 <div class="card p-4 mb-4">
-    <h4 class="h5">Taxa de Acertos Geral</h4>
+    <h4 class="h5 text-sm mb-2">Taxa de Acertos Geral</h4>
     {#if data.totalQuestions > 0}
-        <table class="table table-hover">
+        <table class="table table-hover text-xs text-center align-middle">
             <thead>
                 <tr>
-                    <th>Perguntas Respondidas</th>
-                    <th>Acertos</th>
-                    <th>Taxa de Acerto (%)</th>
+                    <th class="text-center">Perguntas Respondidas</th>
+                    <th class="text-center">Acertos</th>
+                    <th class="text-center">Taxa de Acerto (%)</th>
                 </tr>
             </thead>
             <tbody>
