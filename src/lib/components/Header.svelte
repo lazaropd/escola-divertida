@@ -22,7 +22,10 @@
 
 <AppBar>
     <svelte:fragment slot="lead">
-        <strong class="uppercase">Escola Divertida</strong>
+        <!-- Alterado: Adicionado link para a página inicial -->
+        <a href="/">
+            <strong class="uppercase">Escola Divertida</strong>
+        </a>
     </svelte:fragment>
     <svelte:fragment slot="trail">
         <a href="/" class="mx-2">Início</a>
