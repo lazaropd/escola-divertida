@@ -22,7 +22,10 @@
 
         // Retorna uma função de cleanup para remover o listener quando o componente for destruído
         return () => {
-            authListener.unsubscribe();
+            // CORRIGIDO: Acessa o método unsubscribe corretamente
+            if (authListener && authListener.subscription) {
+                authListener.subscription.unsubscribe();
+            }
         };
     });
 </script>
