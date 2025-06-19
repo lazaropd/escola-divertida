@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import { AppShell } from '@skeletonlabs/skeleton';
+    import { onMount } from 'svelte';
     import Header from '$lib/components/Header.svelte';
     import Footer from '$lib/components/Footer.svelte';
     import { supabase } from '$lib/supabaseClient'; // Importa o cliente Supabase
