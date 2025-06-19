@@ -19,6 +19,7 @@
     let exerciseError: string | null = null;
 
     // Variáveis para armazenar e exibir as informações da BNCC
+    let currentDisciplina: string = "";
     let currentUnidadeTematica: string = "";
     let currentObjetoConhecimento: string = "";
     let currentCodigoObjetivo: string = "";
@@ -36,16 +37,13 @@
         exerciseError = null;
         currentBnccGuideline = null; // Limpa a diretriz anterior
 
-        // Calcula a idade aproximada do jogador para filtrar a BNCC
-        const playerAge = localSelected.ano_escolar + 5;
-
         try {
             const { data, error } = await supabase
                 .from('bncc_guidelines')
                 .select('subject, thematic_unit, knowledge_object, knowledge_code, knowledge, age_start, age_end, subject_normalized')
                 .eq('subject_normalized', $selectedPlayer.disciplina)
-                .lte('age_start', playerAge)
-                .gte('age_end', playerAge);
+                .lte('age_start', localSelected.ano_escolar)
+                .gte('age_end', localSelected.ano_escolar);
 
             if (error) {
                 console.error('Erro ao buscar diretrizes BNCC:', error);
@@ -57,6 +55,7 @@
                 currentBnccGuideline = data[Math.floor(Math.random() * data.length)];
                 
                 // Atualiza as variáveis reativas para exibição e uso no prompt do Gemini
+                currentDisciplina = currentBnccGuideline.subject;
                 currentUnidadeTematica = currentBnccGuideline.thematic_unit;
                 currentObjetoConhecimento = currentBnccGuideline.knowledge_object;
                 currentCodigoObjetivo = currentBnccGuideline.knowledge_code;
@@ -238,7 +237,7 @@
 
     {#if $selectedPlayer && currentCodigoObjetivo}
         <p class="text-xs text-gray-500 mt-8 text-center">
-            <b>({currentCodigoObjetivo})</b> {currentUnidadeTematica} - {currentObjetoConhecimento} ({currentBnccGuideline?.subject || ''})
+            <b>{currentDisciplina} ({currentCodigoObjetivo}):</b> {currentUnidadeTematica} - {currentObjetoConhecimento}
         </p>
     {/if}
 </div>
