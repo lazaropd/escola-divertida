@@ -1,23 +1,21 @@
 <script lang="ts">
     import { supabase } from '$lib/supabaseClient';
     import { goto } from '$app/navigation';
-    import { onMount } from 'svelte';
     import { AppBar } from '@skeletonlabs/skeleton';
+    import { session } from '$lib/stores'; // Importa a store de sessão global
 
-    let session;
-
-    onMount(async () => {
-        const { data: { session: currentSession } } = await supabase.auth.getSession();
-        session = currentSession;
-    });
+    // O componente agora assina a store 'session' diretamente.
+    // Não é mais necessário um onMount local para buscar a sessão,
+    // pois o layout já está gerenciando e atualizando a store.
 
     async function signOut() {
         const { error } = await supabase.auth.signOut();
         if (error) {
             console.error('Erro ao fazer logout:', error);
         } else {
+            // A store 'session' será automaticamente atualizada para null pelo listener no layout.
+            // Não é mais necessário recarregar a página.
             goto('/');
-            window.location.reload();
         }
     }
 </script>
@@ -29,8 +27,8 @@
     <svelte:fragment slot="trail">
         <a href="/" class="mx-2">Início</a>
 
-        
-        {#if session}
+        <!-- Usa $session para reagir às mudanças na store -->
+        {#if $session}
         <div class="divider-vertical"></div>
 		<a href="/play" class="mx-2">Jogar</a>
         <div class="divider-vertical"></div>

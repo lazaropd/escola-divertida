@@ -7,8 +7,6 @@
     let password = '';
     let error = '';
 
-    // A variável local 'session' não é mais necessária aqui, pois usaremos a store global.
-
     async function signIn() {
         const { data, error: err } = await supabase.auth.signInWithPassword({
             email: email,
