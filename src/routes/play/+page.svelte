@@ -23,25 +23,70 @@
     let currentObjetoConhecimento: string = "";
     let currentCodigoObjetivo: string = "";
     let currentObjetivoAprendizagem: string = "";
+    let currentBnccGuideline: any | null = null; // Armazena o objeto da diretriz BNCC selecionada
+
+    // Função para buscar uma diretriz BNCC aleatória com base na disciplina e ano escolar
+    async function fetchBnccGuideline() {
+        if (!localSelected || !$selectedPlayer.disciplina) {
+            console.warn('Jogador ou disciplina não selecionados para buscar diretriz BNCC.');
+            return;
+        }
+
+        isLoadingExercise = true; // Ativa o estado de carregamento
+        exerciseError = null;
+        currentBnccGuideline = null; // Limpa a diretriz anterior
+
+        // Calcula a idade aproximada do jogador para filtrar a BNCC
+        const playerAge = localSelected.ano_escolar + 5;
+
+        try {
+            const { data, error } = await supabase
+                .from('bncc_guidelines')
+                .select('subject, thematic_unit, knowledge_object, knowledge_code, knowledge, age_start, age_end, subject_normalized')
+                .eq('subject_normalized', $selectedPlayer.disciplina)
+                .lte('age_start', playerAge)
+                .gte('age_end', playerAge);
+
+            if (error) {
+                console.error('Erro ao buscar diretrizes BNCC:', error);
+                throw new Error('Falha ao buscar diretrizes BNCC do banco de dados.');
+            }
+
+            if (data && data.length > 0) {
+                // Seleciona uma diretriz aleatoriamente da lista filtrada
+                currentBnccGuideline = data[Math.floor(Math.random() * data.length)];
+                
+                // Atualiza as variáveis reativas para exibição e uso no prompt do Gemini
+                currentUnidadeTematica = currentBnccGuideline.thematic_unit;
+                currentObjetoConhecimento = currentBnccGuideline.knowledge_object;
+                currentCodigoObjetivo = currentBnccGuideline.knowledge_code;
+                currentObjetivoAprendizagem = currentBnccGuideline.knowledge;
+            } else {
+                exerciseError = 'Nenhuma diretriz BNCC encontrada para a seleção atual. Tente outro astronauta ou ano escolar.';
+            }
+        } catch (error) {
+            console.error('Erro ao buscar diretriz BNCC:', error);
+            exerciseError = (error as Error).message || 'Erro desconhecido ao carregar diretriz BNCC.';
+        } finally {
+            // O isLoadingExercise será desativado após loadNewQuizBatch, se for chamado.
+            // Se não houver diretriz, ele será desativado aqui.
+            if (!currentBnccGuideline) {
+                isLoadingExercise = false;
+            }
+        }
+    }
 
     // Função para buscar um novo lote de 10 exercícios da API do Gemini
     async function loadNewQuizBatch() {
-        if (!localSelected || !$selectedPlayer.disciplina) {
-            console.warn('Jogador ou disciplina não selecionados para gerar exercício.');
+        if (!currentBnccGuideline) {
+            console.warn('Diretriz BNCC não carregada. Não é possível gerar exercícios.');
+            isLoadingExercise = false;
             return;
         }
 
         isLoadingExercise = true;
         exerciseError = null;
         exercise = null; // Limpa o exercício atual enquanto carrega
-
-        // Define as informações da BNCC que serão usadas no prompt e exibidas
-        // ATENÇÃO: Estes valores são fixos aqui. Em um cenário real, eles viriam de uma seleção do usuário
-        // ou de uma lógica mais complexa baseada no jogador/missão.
-        currentUnidadeTematica = "Mundo do trabalho";
-        currentObjetoConhecimento = "Matéria-prima e indústria";
-        currentCodigoObjetivo = "EF03GE05";
-        currentObjetivoAprendizagem = "Identificar alimentos, minerais e outros produtos cultivados e extraídos da natureza, comparando as atividades de trabalho em diferentes lugares (campo e cidade), a fim de reconhecer a importância dessas atividades para a indústria.";
 
         try {
             const response = await fetch('/api/generate-quiz', {
@@ -70,11 +115,11 @@
                 currentExerciseIndex = 0; // Começa com o primeiro
                 exercise = exercises[currentExerciseIndex]; // Define o primeiro exercício para exibição
             } else {
-                exerciseError = 'Nenhum exercício foi gerado pela API.';
+                exerciseError = 'Nenhum exercício foi gerado pela API. Tente novamente.';
             }
         } catch (error) {
             console.error('Erro ao buscar novo lote de exercícios:', error);
-            exerciseError = (error as Error).message || 'Erro desconhecido ao carregar exercício.';
+            exerciseError = (error as Error).message || 'Erro desconhecido ao carregar exercícios.';
         } finally {
             isLoadingExercise = false;
         }
@@ -89,7 +134,12 @@
             // Todos os 10 exercícios do lote atual foram utilizados.
             // Verifica se ainda há missões a serem completadas para buscar um novo lote.
             if ($missionCount < 10) { // Assumindo 10 é o número máximo de missões
-                loadNewQuizBatch(); // Busca um novo lote de exercícios
+                // Busca uma nova diretriz BNCC e, em seguida, um novo lote de exercícios
+                fetchBnccGuideline().then(() => {
+                    if (currentBnccGuideline) {
+                        loadNewQuizBatch();
+                    }
+                });
             } else {
                 // Todas as missões foram completadas, não há mais exercícios para carregar.
                 exercise = null; // Limpa o exercício para exibir a mensagem de conclusão
@@ -125,12 +175,18 @@
         players = data;
     }
 
-    function handlePlayerChange() {
+    async function handlePlayerChange() {
 		if (localSelected) {
-            // localSelected já é o objeto do jogador selecionado no dropdown.
             // A store selectedPlayer é atualizada com as informações de disciplina.
 			selectedPlayer.set(getSubject(localSelected));
-            loadNewQuizBatch(); // Inicia o carregamento do primeiro lote de exercícios
+            
+            // Primeiro, busca a diretriz BNCC
+            await fetchBnccGuideline();
+
+            // Se uma diretriz foi encontrada, então carrega o lote de exercícios
+            if (currentBnccGuideline) {
+                await loadNewQuizBatch();
+            }
 		}
 	}
 </script>
@@ -156,7 +212,7 @@
                     <p class="h4 text-tertiary-500 mb-4 pt-4">Adicionando combustível no foguete, aguarde...</p>
                 {:else if exerciseError}
                     <p class="text-red-500">Erro: {exerciseError}</p>
-                    <button class="btn variant-filled-primary mt-4" on:click={loadNewQuizBatch}>Tentar Novamente</button>
+                    <button class="btn variant-filled-primary mt-4" on:click={handlePlayerChange}>Tentar Novamente</button>
                 {:else if exercise}
                     <!-- Ouve o evento 'nextExercise' do componente Exercise -->
                     <Exercise
@@ -182,7 +238,7 @@
 
     {#if $selectedPlayer && currentCodigoObjetivo}
         <p class="text-xs text-gray-500 mt-8 text-center">
-            <b>({currentCodigoObjetivo})</b> {currentUnidadeTematica} - {currentObjetoConhecimento} ({$selectedPlayer.disciplina || ''})
+            <b>({currentCodigoObjetivo})</b> {currentUnidadeTematica} - {currentObjetoConhecimento} ({currentBnccGuideline?.subject || ''})
         </p>
     {/if}
 </div>
