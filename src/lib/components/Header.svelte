@@ -34,8 +34,6 @@
         <div class="divider-vertical"></div>
 		<a href="/play" class="mx-2">Jogar</a>
         <div class="divider-vertical"></div>
-        <a href="/api/generate-content" class="mx-2">TBD</a>
-        <div class="divider-vertical"></div>
         <a href="/dashboard" class="mx-2">Pontos</a>
         <div class="divider-vertical"></div>
         <a href="/profile" class="mx-2">Perfil</a>

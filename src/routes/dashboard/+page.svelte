@@ -29,7 +29,7 @@
 
 <h1 class="h2 text-primary-500 mb-4">Atividade 3</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-            <Exercise />
+
             <RewardBadge points={100} medal="ouro" />
             
         </div>

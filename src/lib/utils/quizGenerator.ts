@@ -32,6 +32,8 @@ Cada item deve ter:
 As perguntas devem ser variadas e adequadas para uma criança de ${ano_ensino_fundamental + 5} anos, cursando o ${ano_ensino_fundamental}º ano do ensino fundamental, focando na disciplina de ${disciplina}, em conformidade com a BNCC Base Nacional Comum Curricular, na unidade temática "${unidade_tematica}", no objeto de conhecimento "${objeto_de_conhecimento}" e com o objetivo de aprendizagem "${codigo_objetivo_de_aprendizagem} ${objetivo_de_aprendizagem}".
 Formato de saída estritamente em JSON. Nada de texto fora do JSON.`;
 
+    console.log('[Gemini Prompt]', prompt);
+    
     try {
         const result = await model.generateContent(prompt);
         const response = await result.response;

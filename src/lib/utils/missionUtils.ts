@@ -90,9 +90,9 @@ export async function recordQuizAttempt(
                 {
                     player_id: playerId,
                     user_id: userId,
-                    codigo_objetivo_de_aprendizagem: knowledgeCode,
-                    disciplina: subject,
-                    ano_escolar: schoolYear,
+                    knowledge_code: knowledgeCode,
+                    subject: subject,
+                    school_year: schoolYear,
                     question: question,
                     options: options,
                     correct_answer_index: correctAnswerIndex,
