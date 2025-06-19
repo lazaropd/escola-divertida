@@ -43,7 +43,7 @@
             {
                 type: 'line' as const, // Tipo de gráfico de linha
                 label: 'Taxa de Acerto (%)',
-                data: data.map(item => item.accuracy.toFixed(1)), // Taxa de acerto
+                data: data.map(item => item.accuracy), // CORRIGIDO: Removido .toFixed(1)
                 backgroundColor: 'rgba(153, 102, 255, 0.6)',
                 borderColor: 'rgba(153, 102, 255, 1)',
                 borderWidth: 2,
@@ -64,6 +64,24 @@
             title: {
                 display: false, // O título já está no h4 do card
             },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        let label = context.dataset.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        if (context.parsed.y !== null) {
+                            if (context.dataset.yAxisID === 'y1') { // Se for o eixo da taxa de acerto
+                                label += context.parsed.y.toFixed(1) + '%';
+                            } else {
+                                label += context.parsed.y;
+                            }
+                        }
+                        return label;
+                    }
+                }
+            }
         },
         scales: {
             y: { // Eixo Y para as barras (Perguntas Respondidas)
@@ -89,11 +107,10 @@
                 grid: {
                     drawOnChartArea: false, // Não desenha linhas de grade para este eixo
                 },
-            },
-            x: {
-                title: {
-                    display: true,
-                    text: 'Disciplina'
+                ticks: {
+                    callback: function(value) {
+                        return value + '%'; // Adiciona o símbolo de porcentagem aos rótulos do eixo
+                    }
                 }
             }
         }
