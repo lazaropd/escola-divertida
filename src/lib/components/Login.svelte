@@ -1,12 +1,13 @@
 <script lang="ts">
     import { supabase } from '$lib/supabaseClient';
     import { goto, invalidateAll } from '$app/navigation';
+    import { session } from '$lib/stores'; // Importa a store de sessão global
 
     let email = '';
     let password = '';
     let error = '';
 
-    let session;    
+    // A variável local 'session' não é mais necessária aqui, pois usaremos a store global.
 
     async function signIn() {
         const { data, error: err } = await supabase.auth.signInWithPassword({
@@ -17,9 +18,10 @@
         if (err) {
             error = err.message;
         } else {
-            session = data.session;
+            // ATENÇÃO: Atualiza a store global 'session'
+            session.set(data.session); 
             await goto('/dashboard');
-            await invalidateAll();
+            await invalidateAll(); // Invalida todos os dados carregados para garantir que o dashboard seja atualizado
         }
     }
 </script>
