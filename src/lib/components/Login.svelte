@@ -35,6 +35,15 @@
         {#if error}
             <div class="alert variant-filled-error">{error}</div>
         {/if}
+
+        <!-- Novo Card de Demonstração -->
+        <div class="card variant-filled-surface p-4 text-center mt-4">
+            <p class="text-sm font-semibold">Apenas conhecendo o projeto?</p>
+            <p class="text-xs mt-1">Experimente autenticar com:</p>
+            <p class="text-sm font-bold mt-1">Usuário: visitante@visitante.br</p>
+            <p class="text-sm font-bold">Senha: 123teste</p>
+            <p class="text-xs mt-1">para uma experiência completa e sem compromisso!</p>
+        </div>
     </div>
 </div>
 </div>
