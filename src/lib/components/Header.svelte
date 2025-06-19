@@ -39,10 +39,14 @@
         <div class="divider-vertical"></div>
         <a href="/profile" class="mx-2">Perfil</a>
         <div class="divider-vertical"></div>
+        <a href="/about" class="mx-2">Sobre</a>
+        <div class="divider-vertical"></div>
             <button class="btn variant-filled-secondary mx-2" on:click={signOut}>
                 Sair
             </button>
         {:else}
+            <div class="divider-vertical"></div>
+            <a href="/about" class="mx-2">Sobre</a>
             <a href="/login" class="btn variant-filled-secondary mx-2">Entrar</a>
         {/if}
 		

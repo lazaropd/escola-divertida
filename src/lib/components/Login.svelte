@@ -27,7 +27,7 @@
 <div class="p-24">
 <div class="card p-8 w-full max-w-md flex flex-col items-center">
     <h2 class="text-2xl mb-2">Entrar</h2>
-    <p class="text-xs text-left mb-4">Para acessar a plataforma, você precisa de uma conta.<br />Para criar uma conta, envie um email para lazaro.domiciano@gmail.com</p><br />
+    <p class="text-sm text-left mb-4">Para acessar a plataforma, você precisa de uma conta.<br />Entre em contato para criar uma conta.</p><br />
     <div class="space-y-4 w-full">
         <input class="input p-4 w-full" type="email" placeholder="Email" bind:value={email} />
         <input class="input p-4 w-full" type="password" placeholder="Senha" bind:value={password} />
@@ -36,14 +36,15 @@
             <div class="alert variant-filled-error">{error}</div>
         {/if}
 
-        <!-- Novo Card de Demonstração -->
-        <div class="card variant-filled-surface p-4 text-center mt-4">
-            <p class="text-sm font-semibold">Apenas conhecendo o projeto?</p>
-            <p class="text-xs mt-1">Experimente autenticar com:</p>
-            <p class="text-sm font-bold mt-1">Usuário: visitante@visitante.br</p>
-            <p class="text-sm font-bold">Senha: 123teste</p>
-            <p class="text-xs mt-1">para uma experiência completa e sem compromisso!</p>
-        </div>
     </div>
+
+        <!-- Novo Card de Demonstração -->
+        <div class="card variant-filled-surface p-4 mt-8">
+            <p class="text-sm font-semibold">Apenas conhecendo o projeto?</p>
+            <p class="text-xs mt-1 pt-4">Entre como visitante para uma experiência completa e sem compromisso!</p>
+            <p class="text-sm font-bold mt-1 pt-4">Usuário: visitante@visitante.br</p>
+            <p class="text-sm font-bold">Senha: 123teste</p>
+        </div>
+
 </div>
 </div>
