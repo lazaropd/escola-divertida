@@ -1,52 +1,79 @@
 <script lang="ts">
     import type { PlayerActivity } from '$lib/utils/dashboardUtils';
+    import { Bar } from 'svelte-chartjs';
+    import {
+        Chart as ChartJS,
+        Title,
+        Tooltip,
+        Legend,
+        BarElement,
+        CategoryScale,
+        LinearScale
+    } from 'chart.js';
+
+    // Registra os componentes do Chart.js que serão usados
+    ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
     export let data: PlayerActivity[];
 
-    // Função para gerar um gráfico de barras simples com texto
-    function generateBarChart(value: number, max: number, label: string): string {
-        const barLength = 20; // Comprimento máximo da barra
-        const filledLength = Math.round((value / max) * barLength);
-        const bar = '█'.repeat(filledLength) + '░'.repeat(barLength - filledLength);
-        return `${label.padEnd(10)} [${bar}] ${value}`;
-    }
+    // Dados reativos para o Chart.js
+    $: chartData = {
+        labels: data.map(item => item.sessionDate),
+        datasets: [
+            {
+                label: 'Perguntas Respondidas',
+                data: data.map(item => item.totalQuestions),
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Acertos',
+                data: data.map(item => item.correctQuestions),
+                backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1
+            }
+        ]
+    };
+
+    // Opções do gráfico
+    $: chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'top' as const,
+            },
+            title: {
+                display: false, // O título já está no h4 do card
+                text: 'Atividade por Data',
+            },
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Número de Perguntas'
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'Data da Sessão'
+                }
+            }
+        }
+    };
 </script>
 
 <div class="card p-4 mb-4">
     <h4 class="h5">Atividade por Data</h4>
     {#if data.length > 0}
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Data da Sessão</th>
-                    <th>Perguntas Respondidas</th>
-                    <th>Acertos</th>
-                    <th>Taxa de Acerto (%)</th>
-                    <th>Tempo Médio (s)</th>
-                </tr>
-            </thead>
-            <tbody>
-                {#each data as item}
-                    <tr>
-                        <td>{item.sessionDate}</td>
-                        <td>{item.totalQuestions}</td>
-                        <td>{item.correctQuestions}</td>
-                        <td>{item.accuracy.toFixed(1)}%</td>
-                        <td>{item.avgDecisionTime.toFixed(1)}s</td>
-                    </tr>
-                {/each}
-            </tbody>
-        </table>
-        <!-- Exemplo de visualização simples de "gráfico" de texto -->
-        <h5 class="h6 mt-4">Visualização de Perguntas por Data:</h5>
-        {#each data as item}
-            <p class="font-mono text-sm">
-                {generateBarChart(item.totalQuestions, Math.max(...data.map(d => d.totalQuestions)), item.sessionDate)}
-            </p>
-        {/each}
-        <p class="text-sm text-gray-500 mt-2">
-            *Para gráficos mais avançados, uma biblioteca de visualização de dados seria recomendada.
-        </p>
+        <div style="height: 300px;"> <!-- Define uma altura para o gráfico -->
+            <Bar data={chartData} options={chartOptions} />
+        </div>
     {:else}
         <p>Nenhuma atividade registrada para este astronauta no período.</p>
     {/if}
